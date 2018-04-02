@@ -1,4 +1,4 @@
-package com.example.kirsten.testapp;
+package com.example.k.testapp;
 
 import android.content.ContentValues;
 import android.content.Context;
