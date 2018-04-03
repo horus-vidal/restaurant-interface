@@ -6,6 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+
 
 public class DBhelper extends SQLiteOpenHelper {
 
@@ -199,6 +204,7 @@ public class DBhelper extends SQLiteOpenHelper {
     }
 
     //goes through the menu items table, looking for items by type
+    //returns all items that match
     public Cursor getItemsByType(String type)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -209,7 +215,7 @@ public class DBhelper extends SQLiteOpenHelper {
 
     //sets the comp flag to 1, signalling the item was comped, and
     //adds a short string for comment to the order items table
-    //returns true after updating
+    //returns true after updating successfully
     public boolean compItems(int orderid, String comment)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -220,6 +226,16 @@ public class DBhelper extends SQLiteOpenHelper {
                 + oi_col6 + " = " + comment
                 + " WHERE " + oi_col0 + " = " + orderid, null);
         return true;
+    }
+
+    //retrieves individual comped items from db
+    //and returns them
+    public Cursor getCompedItems()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from " + oi_table
+                + " where " + oi_col5 + " = 1", null);
+        return res;
     }
 
     //deletes full row from order items table (by id)
@@ -242,13 +258,64 @@ public class DBhelper extends SQLiteOpenHelper {
 
     }
 
-    //eventually, a filter allergens method will be added that uses the
-    //filter allergens table and loops through, excluding the allergens
-    //sent in
+    //looks for all items in the order items table with the same transaction
+    //id and returns them
+    public Cursor getAllItems(int transid)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from " + oi_table
+                + " where " + oi_col1 + " = " + transid, null);
+        return res;
+    }
 
-    //a method to add allergens since they are their own separate table will also
-    //be needed
 
-    //placeholder for a get date class, needed for recording into the order table
+    //a method to filter allergens by type and get the names of the
+    //menu items that match
+    //returns an array list of names
+    public ArrayList<String> filterAlergens(ArrayList<String> allergens, String type)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<String> tempList = new ArrayList<>();
+        ArrayList<String> nameList = new ArrayList<>(); //a list for duplicates
+
+            //if there's only one allergen
+            if(allergens.size() == 1)
+            {
+                Cursor c = db.rawQuery("select " + al_col2 + " from " + al_table
+                        + " where " + al_col1 + " != " + allergens.get(0)
+                        + " and " + al_col3 + " = " + type, null);
+                nameList.add(c.toString());
+            }
+
+            else
+            {
+                for (String allergen : allergens) {
+                    Cursor res = db.rawQuery("select " + al_col2 + " from " + al_table
+                            + " where " + al_col1 + " != " + allergen
+                            + " and " + al_col3 + " = " + type, null);
+                    //if there are multiple allergens, the menu items who end up coming up
+                    //more than once should be the items that don't have any allergens
+                    //in them
+                    tempList.add(res.toString());
+                    if (!tempList.add(res.toString())) {
+                        nameList.add(res.toString());
+                    }
+                }
+            }   //otherwise, if there's more than one allergen
+            return nameList;
+    }
+
+    //a function to get both date and time
+    //returns this as a string
+    public String getDateTime()
+    {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm",
+                Locale.getDefault());
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
+
+
+
 }
 
