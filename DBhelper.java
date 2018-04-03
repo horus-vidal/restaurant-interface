@@ -58,6 +58,8 @@ public class DBhelper extends SQLiteOpenHelper {
     public static final String oi_col4 = "quantity";    //quantity of items ordered
     public static final String oi_col5 = "comped_flag"; //if the order item is comped, set flag to comped
     public static final String oi_col6 = "reasons_comped"; //enter reasons why it was comped
+    public static final String oi_col7 = "oi_price"; //price of the actual order item, is = quantity * price
+                                                     //from the menu items table
 
 
 
@@ -123,6 +125,7 @@ public class DBhelper extends SQLiteOpenHelper {
                 + oi_col4 + " INTEGER, "
                 + oi_col5 + " INTEGER, "
                 + oi_col6 + " TEXT, "
+                + oi_col7 + " REAL, "
                 + "FOREIGN KEY( " + oi_col1 + " ) REFERENCES "
                 + orders_table + "( " + fo_col1 + " ), "
                 + "FOREIGN KEY( " + oi_col2 + " ) REFERENCES "
@@ -189,6 +192,9 @@ public class DBhelper extends SQLiteOpenHelper {
         //create values for a new order item
         ContentValues contentvalues = new ContentValues();
 
+        //get total order item cost
+        double cost = getOrderItemPrice(itemName, quantity);
+
         //add values to db
         contentvalues.put(oi_col1, transactionId);
         contentvalues.put(oi_col2, itemName);
@@ -196,11 +202,52 @@ public class DBhelper extends SQLiteOpenHelper {
         contentvalues.put(oi_col4, quantity);
         contentvalues.put(oi_col5, 0);  //originally not comped, so flags are set to 0 and
         contentvalues.put(oi_col6, " "); //reasons are left blank
+        contentvalues.put(oi_col7, cost);
+
 
         long result = db.insert(oi_table, null, contentvalues);
         if(result == -1)
             return false;
         else return true;
+    }
+
+    //a method to get total order item price, searches for menu item by name
+    //multiplies the found price by quantity and returns total cost
+    public double getOrderItemPrice(String name, int quantity)
+    {
+        //create price containers
+        double itemTotal = 0.0;
+        double price = 0.0;
+
+        //create a database object
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        //query the database
+        Cursor c = db.rawQuery("select " + mi_col4 + " from " + mi_table
+                + " where " + mi_col2 + " = " + name, null);
+        c.moveToFirst();
+
+        //convert result to double and multiply by quantity.
+       price = c.getDouble(0);
+       itemTotal = price * quantity;
+
+        return itemTotal;
+
+    }
+
+    //method to update order total in case of comping or adding an order item
+    //paramaters are an operator (+/-), the ammount to be changed, and
+    //the tid (transaction id)
+    //returns true if updated appropriately
+    public boolean updateOrderTotal(String operator, double ammount, int tid)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.rawQuery("UPDATE " + orders_table
+                + " SET " + fo_col4 + " = " + fo_col4 + operator
+                + ammount + " WHERE " + fo_col1 + " = " + tid, null);
+        return true;
+
     }
 
     //goes through the menu items table, looking for items by type
@@ -222,8 +269,9 @@ public class DBhelper extends SQLiteOpenHelper {
         int flag = 1;
 
         db.rawQuery("UPDATE " + oi_table
-                + " SET " + oi_col5 + " = " + flag
-                + oi_col6 + " = " + comment
+                + " SET " + oi_col5 + " = " + flag + ", "
+                + oi_col6 + " = " + comment + ", "
+                + oi_col7 + " = 0.0 "
                 + " WHERE " + oi_col0 + " = " + orderid, null);
         return true;
     }
@@ -308,7 +356,7 @@ public class DBhelper extends SQLiteOpenHelper {
             return res2;
         }
 
-        //if there is only one allergen, the function drops to this statment and prints
+        //if there is only one allergen, the function drops to this statement and prints
         //out the results for only one
         Cursor res = db.rawQuery(SQL_join, null);
         return res;
@@ -324,7 +372,31 @@ public class DBhelper extends SQLiteOpenHelper {
         return dateFormat.format(date);
     }
 
+    //gets weekly server report by joining the information in the order items table
+    //with the server name from the full orders table
+    public Cursor getServerWeekly(String serverName)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
 
+
+        //this is in sql not sqlite so i'm not 100% sure it'll work
+        String SQL_join = "select " + oi_table+ ".*, "
+                + orders_table + "." + fo_col7
+                + " from " + oi_table + " join "
+                + orders_table+ " on " + orders_table+ "."
+                + fo_col1+  " = " + oi_table + "."
+                + oi_col1 +" where " + orders_table + "."
+                + fo_col7 + " = " + serverName + " and "
+                + fo_col3 + " between DATEADD(DAY, DATEDIFF(DAY, 0, GETDATE()), 0)"
+                + " and DATEADD(DAY, DATEDIFF(DAY, 0, GETDATE() - 7), 0) ";
+
+
+            Cursor c = db.rawQuery(SQL_join, null);
+            return c;
+
+    }
+
+//placeholder for getting daily server report
 
 }
 
