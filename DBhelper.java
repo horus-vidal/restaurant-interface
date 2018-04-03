@@ -269,40 +269,44 @@ public class DBhelper extends SQLiteOpenHelper {
     }
 
 
-    //a method to filter allergens by type and get the names of the
-    //menu items that match
-    //returns an array list of names
-    public ArrayList<String> filterAlergens(ArrayList<String> allergens, String type)
+    //a function to filter an allergen, returns
+    //all the (whole) menu items that match by joining
+    //the allergens table and the menu items table
+    public Cursor filterAllergens(ArrayList<String> allergens)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        ArrayList<String> tempList = new ArrayList<>();
-        ArrayList<String> nameList = new ArrayList<>(); //a list for duplicates
+        String extraQuery = "";
 
-            //if there's only one allergen
-            if(allergens.size() == 1)
+
+        String SQL_join = "select " + mi_table + ".*, "
+                    + al_table + "." + al_col1
+                    + " from " + mi_table + " join "
+                    + al_table + " on " + mi_table + "."
+                    + mi_col2 +  " = " + al_table + "."
+                    + al_col2 +" where " + al_table + "."
+                    + al_col1 + " != " + allergens.get(0);
+
+        //if the size of the allergens arraylist is bigger than 1,
+        //loop through the array and add an additional and statement
+        //to the end of the query and return all menu items that match that criteria
+        if(allergens.size() > 1)
+        {
+            for(String allergen : allergens)
             {
-                Cursor c = db.rawQuery("select " + al_col2 + " from " + al_table
-                        + " where " + al_col1 + " != " + allergens.get(0)
-                        + " and " + al_col3 + " = " + type, null);
-                nameList.add(c.toString());
+                String extraAnd =  " and " + al_table + "."
+                        + al_col1 + " != " + allergen;
+                extraQuery = extraQuery + extraAnd;
             }
 
-            else
-            {
-                for (String allergen : allergens) {
-                    Cursor res = db.rawQuery("select " + al_col2 + " from " + al_table
-                            + " where " + al_col1 + " != " + allergen
-                            + " and " + al_col3 + " = " + type, null);
-                    //if there are multiple allergens, the menu items who end up coming up
-                    //more than once should be the items that don't have any allergens
-                    //in them
-                    tempList.add(res.toString());
-                    if (!tempList.add(res.toString())) {
-                        nameList.add(res.toString());
-                    }
-                }
-            }   //otherwise, if there's more than one allergen
-            return nameList;
+            SQL_join = SQL_join + extraQuery;
+            Cursor res2 = db.rawQuery(SQL_join, null);
+            return res2;
+        }
+
+        //if there is only one allergen, the function drops to this statment and prints
+        //out the results for only one
+        Cursor res = db.rawQuery(SQL_join, null);
+        return res;
     }
 
     //a function to get both date and time
