@@ -164,13 +164,16 @@ public class DBhelper extends SQLiteOpenHelper {
     {
         //create a database object
         SQLiteDatabase db = this.getWritableDatabase();
+
         //create values for the first instance of an order
         ContentValues contentvalues = new ContentValues();
 
+        //gets date and time from getdatetime function
+        String date = getDateTime();
+
         //adds initial values to order
         contentvalues.put(fo_col2, customerID);
-
-        //eventually add the date to the content values using a get date method
+        contentvalues.put(fo_col3, date);
         contentvalues.put(fo_col4, orderTotal);
         contentvalues.put(fo_col5, orderStatus);
         contentvalues.put(fo_col6, "not_paid");     //set to not paid as default
@@ -243,6 +246,10 @@ public class DBhelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
+        //SQLite reads as:
+        //UPDATE full_order SET order_total = order_total (+/-) ammount
+        //WHERE transaction_id = tid
+
         db.rawQuery("UPDATE " + orders_table
                 + " SET " + fo_col4 + " = " + fo_col4 + operator
                 + ammount + " WHERE " + fo_col1 + " = " + tid, null);
@@ -268,6 +275,10 @@ public class DBhelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         int flag = 1;
 
+        //SQLite should read as:
+        //UPDATE order_items SET comped_flag = 1,
+        //reasons_comped = comment, oi_price = 0.0
+        //WHERE oi_id = orderid
         db.rawQuery("UPDATE " + oi_table
                 + " SET " + oi_col5 + " = " + flag + ", "
                 + oi_col6 + " = " + comment + ", "
@@ -326,6 +337,11 @@ public class DBhelper extends SQLiteOpenHelper {
         String extraQuery = "";
 
 
+        //should read as:
+        //SELECT menu_items.*, allergens_table.allergen
+        //FROM menu_items JOIN allergens_table
+        //ON menu_items.item_name = allergens_table.item_name
+        //WHERE allergens_table.allergen != (first item in the allergens ArrayList)
         String SQL_join = "select " + mi_table + ".*, "
                     + al_table + "." + al_col1
                     + " from " + mi_table + " join "
@@ -366,7 +382,7 @@ public class DBhelper extends SQLiteOpenHelper {
     //returns this as a string
     public String getDateTime()
     {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm",
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm",
                 Locale.getDefault());
         Date date = new Date();
         return dateFormat.format(date);
@@ -378,8 +394,25 @@ public class DBhelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
+        //get current date and convert to string
+        Cursor c1 = db.rawQuery("select date('now')", null);
+        c1.moveToFirst();
+        String nowDate = c1.getString(0);
 
-        //this is in sql not sqlite so i'm not 100% sure it'll work
+        //get date from a week ago and convert to string
+        Cursor c2 = db.rawQuery("select date('now', '-7 day')", null);
+        c2.moveToFirst();
+        String oldDate = c2.getString(0);
+
+
+        //hopefully changed to sqlite
+        //should read as:
+        //SELECT order_items.*, full_order.server_name
+        //FROM order_items JOIN full_order
+        //ON full_order.transaction_id = order_items.transaction_id
+        //WHERE full_order.server_name = serverName
+        //AND full_order.date BETWEEN oldDate AND nowDate
+
         String SQL_join = "select " + oi_table+ ".*, "
                 + orders_table + "." + fo_col7
                 + " from " + oi_table + " join "
@@ -387,8 +420,8 @@ public class DBhelper extends SQLiteOpenHelper {
                 + fo_col1+  " = " + oi_table + "."
                 + oi_col1 +" where " + orders_table + "."
                 + fo_col7 + " = " + serverName + " and "
-                + fo_col3 + " between DATEADD(DAY, DATEDIFF(DAY, 0, GETDATE()), 0)"
-                + " and DATEADD(DAY, DATEDIFF(DAY, 0, GETDATE() - 7), 0) ";
+                + orders_table + "." + fo_col3 + " between "
+                + oldDate + " and " + nowDate;
 
 
             Cursor c = db.rawQuery(SQL_join, null);
