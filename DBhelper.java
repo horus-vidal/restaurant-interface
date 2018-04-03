@@ -293,9 +293,14 @@ public class DBhelper extends SQLiteOpenHelper {
         {
             for(String allergen : allergens)
             {
-                String extraAnd =  " and " + al_table + "."
-                        + al_col1 + " != " + allergen;
-                extraQuery = extraQuery + extraAnd;
+                //this excludes the first element of the array since it's
+                //already included in the variable declaration
+                if(allergen != allergens.get(0))
+                {
+                    String extraAnd = " and " + al_table + "."
+                            + al_col1 + " != " + allergen;
+                    extraQuery = extraQuery + extraAnd;
+                }
             }
 
             SQL_join = SQL_join + extraQuery;
