@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Manager</string>
+    <string name="button_table">View Tables</string>
+    <string name="button_trans">View Transactions</string>
+    <string name="button_comps">Compensation Reports</string>
+    <string name="button_empl">Employee Reports</string>
+</resources>
