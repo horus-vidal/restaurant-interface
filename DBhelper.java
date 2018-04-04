@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -69,20 +70,6 @@ public class DBhelper extends SQLiteOpenHelper {
     public static final String al_col2 = "item_name";   //item name, from menu items
     public static final String al_col3 = "item_type";   //item type, from menu items
 
-
-
-    /*below is what i was originally going to do for specials, which we can go back to
-    *but i think just adding a special flag to a menu item is a better method
-    *
-    * columns in the daily specials table
-    *public static final String ds_col1 = "day"; //primary key for special of the day
-    *public static final String ds_col2 = "sp_name"; //special name
-    *public static final String ds_col3 = "sp_type"; //special type
-    *public static final String ds_col4 = "sp_price"; //special price
-    *public static final String ds_col5 = "sp_calories"; //special nutritional facts
-    *public static final String ds_col6 = "sp_protein";
-    *public static final String ds_col7 = "sp_sodium";
-    *public static final String ds_col8 = "sp_sugar"; */
 
     public DBhelper(Context context) {
         super(context, database_name, null, 1);
@@ -205,8 +192,9 @@ public class DBhelper extends SQLiteOpenHelper {
         //create values for a new order item
         ContentValues contentvalues = new ContentValues();
 
+        Log.d("ABOVE PRICE CALL", "ITEM NAME IS: " + itemName );
         //get total order item cost
-        double cost = getOrderItemPrice(itemName, quantity);
+       double cost = getOrderItemPrice(itemName, quantity);
 
         //add values to db
         contentvalues.put(oi_col1, transactionId);
@@ -224,46 +212,91 @@ public class DBhelper extends SQLiteOpenHelper {
         else return true;
     }
 
-
     //a method to get total order item price, searches for menu item by name
     //multiplies the found price by quantity and returns total cost
     public double getOrderItemPrice(String name, int quantity)
     {
         //create price containers
         double itemTotal = 0.0;
-        double price = 0.0;
+        double miprice = 0.0;
 
         //create a database object
         SQLiteDatabase db = this.getWritableDatabase();
 
+        Log.d("ABOVE PRICE QUERY", "ITEM NAME IS: " + name);
+
         //query the database
+        //SQL reads as:
+        //select price from menu_items where item_name = 'name'
         Cursor c = db.rawQuery("select " + mi_col4 + " from " + mi_table
-                + " where " + mi_col2 + " = " + name, null);
+                + " where " + mi_col2 + " = " + " '" +  name + "' ", null);
+
         c.moveToFirst();
 
         //convert result to double and multiply by quantity.
-       price = c.getDouble(0);
-       itemTotal = price * quantity;
+       miprice = c.getDouble(0);
+       itemTotal = miprice * quantity;
 
         return itemTotal;
 
+
+    }
+
+    //test method to add a menu item
+    //returns true if successfull
+    public boolean addMenuItem(String itemName, String itemType, double price)
+    {
+        //create a database object
+        SQLiteDatabase db = this.getWritableDatabase();
+        //create values for a new order item
+        ContentValues contentvalues = new ContentValues();
+
+        //add values to db
+        contentvalues.put(mi_col2, itemName);
+        contentvalues.put(mi_col3, itemType);
+        contentvalues.put(mi_col4, price);
+
+        long result = db.insert(mi_table, null, contentvalues);
+        if(result == -1)
+            return false;
+        else return true;
+    }
+
+    //test method to add an allergen
+    //returns true if successfull
+    public boolean addAllergen(String allergen, String name, String type)
+    {
+        //create a database object
+        SQLiteDatabase db = this.getWritableDatabase();
+        //create values for a new order item
+        ContentValues contentvalues = new ContentValues();
+
+        //add values to db
+        contentvalues.put(al_col1, allergen);
+        contentvalues.put(al_col2, name);
+        contentvalues.put(al_col3, type);
+
+        long result = db.insert(al_table, null, contentvalues);
+        if(result == -1)
+            return false;
+        else return true;
     }
 
     //method to update order total in case of comping or adding an order item
     //paramaters are an operator (+/-), the ammount to be changed, and
     //the tid (transaction id)
     //returns true if updated appropriately
-    public boolean updateOrderTotal(String operator, double ammount, int tid)
+    public boolean updateOrderTotal(String operator, double amount, int tid)
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
         //SQLite reads as:
-        //UPDATE full_order SET order_total = order_total (+/-) ammount
+        //UPDATE full_order SET order_total = order_total (+/-) amount
         //WHERE transaction_id = tid
 
         db.rawQuery("UPDATE " + orders_table
                 + " SET " + fo_col4 + " = " + fo_col4 + operator
-                + ammount + " WHERE " + fo_col1 + " = " + tid, null);
+                + amount + " WHERE " + fo_col1 + " = " + tid, null);
         return true;
 
     }
@@ -273,8 +306,11 @@ public class DBhelper extends SQLiteOpenHelper {
     public Cursor getItemsByType(String type)
     {
         SQLiteDatabase db = this.getWritableDatabase();
+
+        //SQL reads as:
+        //select * from menu_items where item_type = 'type'
         Cursor res = db.rawQuery("select * from " + mi_table
-                        + " where " + mi_col3 + " = " + type, null);
+                        + " where " + mi_col3 + " = '" + type + "' ", null);
         return res;
     }
 
@@ -288,11 +324,11 @@ public class DBhelper extends SQLiteOpenHelper {
 
         //SQLite should read as:
         //UPDATE order_items SET comped_flag = 1,
-        //reasons_comped = comment, oi_price = 0.0
+        //reasons_comped = 'comment', oi_price = 0.0
         //WHERE oi_id = orderid
         db.rawQuery("UPDATE " + oi_table
                 + " SET " + oi_col5 + " = " + flag + ", "
-                + oi_col6 + " = " + comment + ", "
+                + oi_col6 + " = '" + comment + "', "
                 + oi_col7 + " = 0.0 "
                 + " WHERE " + oi_col0 + " = " + orderid, null);
         return true;
@@ -322,8 +358,11 @@ public class DBhelper extends SQLiteOpenHelper {
     public Cursor getSpecial(String day)
     {
         SQLiteDatabase db = this.getWritableDatabase();
+
+        //SQL reads as:
+        //select * from menu_items where special_tag = 'day'
         Cursor res = db.rawQuery("select * from " + mi_table
-                + " where " + mi_col5 + " = " + day, null);
+                + " where " + mi_col5 + " = '" + day + "' ", null);
         return res;
 
     }
@@ -352,14 +391,14 @@ public class DBhelper extends SQLiteOpenHelper {
         //SELECT menu_items.*, allergens_table.allergen
         //FROM menu_items JOIN allergens_table
         //ON menu_items.item_name = allergens_table.item_name
-        //WHERE allergens_table.allergen != (first item in the allergens ArrayList)
+        //WHERE allergens_table.allergen != '(first item in the allergens ArrayList)'
         String SQL_join = "select " + mi_table + ".*, "
                     + al_table + "." + al_col1
                     + " from " + mi_table + " join "
                     + al_table + " on " + mi_table + "."
                     + mi_col2 +  " = " + al_table + "."
                     + al_col2 +" where " + al_table + "."
-                    + al_col1 + " != " + allergens.get(0);
+                    + al_col1 + " != '" + allergens.get(0) + "' ";
 
         //if the size of the allergens arraylist is bigger than 1,
         //loop through the array and add an additional and statement
@@ -373,16 +412,22 @@ public class DBhelper extends SQLiteOpenHelper {
                 if(allergen != allergens.get(0))
                 {
                     String extraAnd = " and " + al_table + "."
-                            + al_col1 + " != " + allergen;
+                            + al_col1 + " != '" + allergen + "' ";
+
                     extraQuery = extraQuery + extraAnd;
                 }
             }
 
+
             SQL_join = SQL_join + extraQuery;
+
+            Log.d("BIG JOIN: ", SQL_join);
+
             Cursor res2 = db.rawQuery(SQL_join, null);
             return res2;
         }
 
+        Log.d("LITTLE JOIN: ", SQL_join);
         //if there is only one allergen, the function drops to this statement and prints
         //out the results for only one
         Cursor res = db.rawQuery(SQL_join, null);
@@ -418,12 +463,12 @@ public class DBhelper extends SQLiteOpenHelper {
         String oldDate = c2.getString(0);
 
 
-        //hopefully changed to sqlite
-        //should read as:
+
+        //SQL should read as:
         //SELECT order_items.*, full_order.server_name
         //FROM order_items JOIN full_order
         //ON full_order.transaction_id = order_items.transaction_id
-        //WHERE full_order.server_name = serverName
+        //WHERE full_order.server_name = 'serverName'
         //AND full_order.date BETWEEN oldDate AND nowDate
 
         String SQL_join = "select " + oi_table+ ".*, "
@@ -432,9 +477,9 @@ public class DBhelper extends SQLiteOpenHelper {
                 + orders_table+ " on " + orders_table+ "."
                 + fo_col1+  " = " + oi_table + "."
                 + oi_col1 +" where " + orders_table + "."
-                + fo_col7 + " = " + serverName + " and "
-                + orders_table + "." + fo_col3 + " between "
-                + oldDate + " and " + nowDate;
+                + fo_col7 + " = '" + serverName + "' and "
+                + orders_table + "." + fo_col3 + " between '"
+                + oldDate + "' and '" + nowDate + "' ";
 
 
             Cursor c = db.rawQuery(SQL_join, null);
