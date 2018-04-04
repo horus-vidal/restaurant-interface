@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".MainProjectScreen"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,7 +20,7 @@
         </activity>
         <activity
             android:name=".TableList"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".ManagerMainScreen"
             android:screenOrientation="portrait" />
         <activity
             android:name=".TableInformation"
@@ -28,15 +28,15 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Transactions"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".ManagerMainScreen"
             android:screenOrientation="portrait" />
         <activity
             android:name=".CompReports"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".ManagerMainScreen"
             android:screenOrientation="portrait" />
         <activity
             android:name=".EmplReports"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".ManagerMainScreen"
             android:screenOrientation="portrait" />
         <activity
             android:name=".TransactionInformation"
@@ -45,7 +45,11 @@
         <activity
             android:name=".EmplReportInformation"
             android:parentActivityName=".EmplReports"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ManagerMainScreen"
+            android:parentActivityName=".ManagerMainScreen"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="project.manager.ManagerMainScreen">
+    tools:context="project.manager.MainProjectScreen">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,43 +16,44 @@
         tools:layout_editor_absoluteY="8dp">
 
         <Button
-            android:id="@+id/button_tables"
+            android:id="@+id/button_customer"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:onClick="startTableList"
-            android:text="@string/button_table" />
+            android:onClick="startCustomer"
+            android:text="@string/button_customer" />
 
         <Button
-            android:id="@+id/button_trans"
+            android:id="@+id/button_waitstaff"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:onClick="startTrans"
-            android:text="@string/button_trans" />
+            android:onClick="startWaitstaff"
+            android:text="@string/button_waitstaff" />
 
         <Button
-            android:id="@+id/button_comps"
+            android:id="@+id/button_kitchen"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:onClick="startComps"
-            android:text="@string/button_comps" />
+            android:onClick="startKitchen"
+            android:text="@string/button_kitchen" />
 
         <Button
-            android:id="@+id/button_empl"
+            android:id="@+id/button_manager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:onClick="startEmpl"
-            android:text="@string/button_empl" />
+            android:onClick="startManager"
+            android:text="@string/button_manager" />
     </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>
