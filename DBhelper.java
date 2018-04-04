@@ -462,33 +462,63 @@ public class DBhelper extends SQLiteOpenHelper {
         c2.moveToFirst();
         String oldDate = c2.getString(0);
 
-
-
-        //SQL should read as:
+        //SQL reads:
         //SELECT order_items.*, full_order.server_name
         //FROM order_items JOIN full_order
-        //ON full_order.transaction_id = order_items.transaction_id
         //WHERE full_order.server_name = 'serverName'
         //AND full_order.date BETWEEN oldDate AND nowDate
 
         String SQL_join = "select " + oi_table+ ".*, "
-                + orders_table + "." + fo_col7
+                + orders_table + "." + fo_col7 + ", "
+                + orders_table + "." + fo_col3
                 + " from " + oi_table + " join "
-                + orders_table+ " on " + orders_table+ "."
-                + fo_col1+  " = " + oi_table + "."
-                + oi_col1 +" where " + orders_table + "."
-                + fo_col7 + " = '" + serverName + "' and "
+                + orders_table + " where " + fo_col7
+                + " = '" + serverName + "' " + " and "
                 + orders_table + "." + fo_col3 + " between '"
                 + oldDate + "' and '" + nowDate + "' ";
 
 
             Cursor c = db.rawQuery(SQL_join, null);
             return c;
-
     }
 
 
-//placeholder for getting daily server report
+    //gets day-of server report by joining the information in the order items table
+    //with the server name from the full orders table
+    public Cursor getServerDaily(String serverName)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Log.d("date: ", " before lmao " );
+        //get current date and convert to string
+        Cursor c1 = db.rawQuery("select date('now')", null);
+        c1.moveToFirst();
+        String nowDate = c1.getString(0);
+
+        Log.d("date: ", "now= " + nowDate);
+
+        //SQL reads:
+        //SELECT order_items.*, full_order.server_name
+        //FROM order_items JOIN full_order
+        //WHERE full_order.server_name = 'serverName'
+        //AND full_order.date = 'nowDate'
+
+        String SQL_join = "select " + oi_table+ ".*, "
+                + orders_table + "." + fo_col7 + ", "
+                + orders_table + "." + fo_col3
+                + " from " + oi_table + " join "
+                + orders_table + " where " + fo_col7
+                + " = '" + serverName + "' " + " and "
+                + orders_table + "." + fo_col3 + " = '"
+                + nowDate + "' ";
+
+        Log.d("DATE JOIN: ", SQL_join);
+
+
+        Cursor c = db.rawQuery(SQL_join, null);
+        return c;
+
+    }
 
 }
 
