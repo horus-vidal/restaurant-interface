@@ -105,7 +105,7 @@ public class DBhelper extends SQLiteOpenHelper {
 
         //creates the menu items table
         db.execSQL("create table " + mi_table +
-                "( " + mi_col1 + "INTEGER PRIMARY KEY AUTOINCREMENT, "
+                "( " + mi_col1 + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + mi_col2 + " TEXT, "
                 + mi_col3 + " TEXT, "
                 + mi_col4 + " REAL, "
@@ -118,7 +118,7 @@ public class DBhelper extends SQLiteOpenHelper {
 
         //creates the order items table (updated to add order item id
         db.execSQL("create table " + oi_table +
-                "( " +  oi_col0 + "INTEGER PRIMARY KEY AUTOINCREMENT, "
+                "( " +  oi_col0 + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + oi_col1 + " INTEGER, "
                 +oi_col2 + " TEXT, "
                 + oi_col3 + " TEXT, "
@@ -187,6 +187,16 @@ public class DBhelper extends SQLiteOpenHelper {
 
     }
 
+    //method to get all data from the order table
+    //added for debugging, can stay if necessary
+    public Cursor getOrderData()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from " + orders_table, null);
+        return res;
+    }
+
+
     //The add order item class adds an individual order item to an existing order
     public boolean addOrderItem(int transactionId, String itemName, String itemType, int quantity)
     {
@@ -213,6 +223,7 @@ public class DBhelper extends SQLiteOpenHelper {
             return false;
         else return true;
     }
+
 
     //a method to get total order item price, searches for menu item by name
     //multiplies the found price by quantity and returns total cost
@@ -378,6 +389,7 @@ public class DBhelper extends SQLiteOpenHelper {
         return res;
     }
 
+
     //a function to get both date and time
     //returns this as a string
     public String getDateTime()
@@ -387,6 +399,7 @@ public class DBhelper extends SQLiteOpenHelper {
         Date date = new Date();
         return dateFormat.format(date);
     }
+
 
     //gets weekly server report by joining the information in the order items table
     //with the server name from the full orders table
@@ -428,6 +441,7 @@ public class DBhelper extends SQLiteOpenHelper {
             return c;
 
     }
+
 
 //placeholder for getting daily server report
 
