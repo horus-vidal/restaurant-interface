@@ -15,10 +15,10 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/mybotton"
+        android:background="@drawable/newbutton"
         android:drawableBottom="@android:drawable/ic_menu_close_clear_cancel"
         android:text="LOG OUT"
-        android:textColor="#194564"
+        android:textColor="#FFFFFF"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +28,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <RelativeLayout
-        android:id="@+id/tableViewer"
+        android:id="@+id/ViewTable_1"
         android:layout_width="232dp"
         android:layout_height="133dp"
         android:layout_marginEnd="8dp"
@@ -36,7 +36,7 @@
         android:layout_marginTop="8dp"
         android:background="#82A19B"
         android:clickable="true"
-        app:layout_constraintEnd_toStartOf="@+id/relativeLayout"
+        app:layout_constraintEnd_toStartOf="@+id/ViewTable_2"
         app:layout_constraintStart_toEndOf="@+id/logout_button"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -61,7 +61,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="25dp"
-            android:text="Order Ready" />
+            android:text="Order Ready"
+            android:theme="@style/SCBSwitch_Order" />
 
         <Switch
             android:id="@+id/tab1_refill"
@@ -71,7 +72,8 @@
             android:layout_alignParentBottom="true"
             android:layout_alignRight="@+id/tab1_order"
             android:layout_marginBottom="25dp"
-            android:text="Refill" />
+            android:text="Refill"
+            android:theme="@style/SCBSwitch_Help" />
 
         <ListView
             android:id="@+id/tab1_refill_list"
@@ -80,12 +82,12 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:background="#82A19B" />
+            android:background="@drawable/listview_border" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/relativeLayout"
+        android:id="@+id/ViewTable_2"
         android:layout_width="232dp"
         android:layout_height="133dp"
         android:layout_marginBottom="8dp"
@@ -93,7 +95,7 @@
         android:layout_marginTop="8dp"
         android:background="#82A19B"
         android:clickable="true"
-        app:layout_constraintBottom_toTopOf="@+id/relativeLayout3"
+        app:layout_constraintBottom_toTopOf="@+id/ViewTable_4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
@@ -117,7 +119,8 @@
             android:layout_height="100dp"
             android:layout_alignEnd="@+id/tab2_title"
             android:layout_alignParentBottom="true"
-            android:layout_alignRight="@+id/tab2_title" />
+            android:layout_alignRight="@+id/tab2_title"
+            android:background="@drawable/listview_border" />
 
         <Switch
             android:id="@+id/tab2_order"
@@ -126,7 +129,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/tab2_title"
-            android:text="Order Ready" />
+            android:text="Order Ready"
+            android:theme="@style/SCBSwitch_Order" />
 
         <Switch
             android:id="@+id/tab2_refill"
@@ -136,12 +140,13 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/tab2_order"
             android:layout_marginTop="22dp"
-            android:text="Refill" />
+            android:text="Refill"
+            android:theme="@style/SCBSwitch_Help" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/relativeLayout2"
+        android:id="@+id/ViewTable_3"
         android:layout_width="232dp"
         android:layout_height="133dp"
         android:layout_marginBottom="8dp"
@@ -151,9 +156,9 @@
         android:background="#82A19B"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/relativeLayout3"
+        app:layout_constraintEnd_toStartOf="@+id/ViewTable_4"
         app:layout_constraintStart_toEndOf="@+id/logout_button"
-        app:layout_constraintTop_toBottomOf="@+id/tableViewer"
+        app:layout_constraintTop_toBottomOf="@+id/ViewTable_1"
         app:layout_constraintVertical_bias="0.93">
 
         <TextView
@@ -175,7 +180,8 @@
             android:layout_height="100dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:background="@drawable/listview_border" />
 
         <Switch
             android:id="@+id/tab3_order"
@@ -185,7 +191,8 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/tab3_title"
             android:layout_marginBottom="25dp"
-            android:text="Order Ready" />
+            android:text="Order Ready"
+            android:theme="@style/SCBSwitch_Order" />
 
         <Switch
             android:id="@+id/tab3_refill"
@@ -195,12 +202,13 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/tab3_order"
             android:layout_marginBottom="25dp"
-            android:text="Refill" />
+            android:text="Refill"
+            android:theme="@style/SCBSwitch_Help" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/relativeLayout3"
+        android:id="@+id/ViewTable_4"
         android:layout_width="232dp"
         android:layout_height="133dp"
         android:layout_marginBottom="8dp"
@@ -229,7 +237,8 @@
             android:layout_height="100dp"
             android:layout_alignEnd="@+id/tab4_title"
             android:layout_alignParentBottom="true"
-            android:layout_alignRight="@+id/tab4_title" />
+            android:layout_alignRight="@+id/tab4_title"
+            android:background="@drawable/listview_border" />
 
         <Switch
             android:id="@+id/tab4_order"
@@ -239,7 +248,8 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/tab4_title"
             android:layout_marginBottom="25dp"
-            android:text="Order Ready" />
+            android:text="Order Ready"
+            android:theme="@style/SCBSwitch_Order" />
 
         <Switch
             android:id="@+id/tab4_refill"
@@ -249,7 +259,8 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/tab4_order"
             android:layout_marginBottom="25dp"
-            android:text="Refill" />
+            android:text="Refill"
+            android:theme="@style/SCBSwitch_Help" />
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

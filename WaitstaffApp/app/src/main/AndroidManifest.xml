@@ -21,7 +21,13 @@
         <activity
             android:name=".TablesActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".Table_Details"
+        <activity
+            android:name=".Table_Details"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Order_details"
+            android:screenOrientation="landscape" />
+        <activity android:name=".item_details"
             android:screenOrientation="landscape" />
     </application>
 

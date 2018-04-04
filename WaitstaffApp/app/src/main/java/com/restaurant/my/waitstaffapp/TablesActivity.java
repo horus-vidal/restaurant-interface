@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 
 public class TablesActivity extends AppCompatActivity {
 
@@ -21,6 +23,44 @@ public class TablesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 staff_sign_out();
+            }
+        });
+
+
+        //RELATIVE LAYOUT CLICKABLE TABLES
+        RelativeLayout rl_1 = (RelativeLayout)findViewById(R.id.ViewTable_1);
+        rl_1.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                String tableName = "Table 1";
+                open_tableLayout(tableName);
+            }
+        });
+
+        RelativeLayout rl_2 = (RelativeLayout)findViewById(R.id.ViewTable_2);
+        rl_2.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                String tableName = "Table 2";
+                open_tableLayout(tableName);
+            }
+        });
+
+        RelativeLayout rl_3 = (RelativeLayout)findViewById(R.id.ViewTable_3);
+        rl_3.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                String tableName = "Table 3";
+                open_tableLayout(tableName);
+            }
+        });
+
+        RelativeLayout rl_4 = (RelativeLayout)findViewById(R.id.ViewTable_4);
+        rl_4.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                String tableName = "Table 4";
+                open_tableLayout(tableName);
             }
         });
 
@@ -46,14 +86,20 @@ public class TablesActivity extends AppCompatActivity {
         tab4_refill_switch.setChecked(false);
     }
 
-    protected void onResume(){
+  /*  protected void onResume(){
         super.onResume();
 
 
-    }
+    }*/
 
     public void staff_sign_out() {
         Intent signOut_intent = new Intent(this, MainActivity.class);
         startActivity(signOut_intent);
+    }
+
+    public void open_tableLayout(String tableName) {
+        Intent rl_intent = new Intent(this, Table_Details.class);
+        rl_intent.putExtra("tableHeader", tableName);
+        startActivity(rl_intent);
     }
 }
