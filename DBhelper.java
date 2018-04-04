@@ -520,5 +520,65 @@ public class DBhelper extends SQLiteOpenHelper {
 
     }
 
+    //a method to get a specific order's status
+    //by inputting transaction id
+    //returns that order's status in the form of a string
+    public String getOrderStatus(int transactionId)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        //SQL reads as:
+        //select full_order.order_status from full_order where transaction_id = transactionId
+        Cursor c = db.rawQuery("select " + orders_table + "." + fo_col5
+                + " from " + orders_table + " where "
+                + fo_col1 + " = " + transactionId, null);
+        c.moveToFirst();
+        String status = c.getString(0);
+
+        return status;
+    }
+
+    //method to update status of a specific order
+    // parameters are transactionId, newStatus
+    //returns true if updated appropriately
+    public boolean updateOrderStatus(int transactionId, String newStatus)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        //SQLite reads as:
+        //UPDATE full_order SET order_status = 'newStatus'
+        //WHERE transaction_id = transactionId
+
+        db.rawQuery("UPDATE " + orders_table
+                + " SET " + fo_col5 + " = '" + newStatus
+                + "' WHERE " + fo_col1 + " = " + transactionId, null);
+        return true;
+
+    }
+
+    //finds all orders that match the inputted status
+    //returns a list of all the order items under orders with
+    //that status
+    public Cursor filterOrderStatus(String status)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        //SQL reads as:
+        //select full_order.transaction_id, full_order.order_status,
+        //order_items.* from full_order join order_items
+        //where order_status = 'status'
+
+        String SQL_join = "select " + orders_table + "." + fo_col1
+                + orders_table + "." + fo_col5
+                + ", " + oi_table + ".*, from"
+                + orders_table + " join " + oi_table
+                + " where " + fo_col5 + " = '" + status + "'";
+
+
+        Cursor res = db.rawQuery(SQL_join, null);
+        return res;
+
+    }
+
 }
 
