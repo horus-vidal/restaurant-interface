@@ -1,0 +1,4 @@
+#Mon Apr 02 06:10:47 CDT 2018
+base.0=C\:\\Users\\ChimChilla\\AndroidStudioProjects\\KrustyKrab\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\173
+path.0=classes.dex
+renamed.0=classes.dex

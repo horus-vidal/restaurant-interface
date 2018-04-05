@@ -462,33 +462,123 @@ public class DBhelper extends SQLiteOpenHelper {
         c2.moveToFirst();
         String oldDate = c2.getString(0);
 
-
-
-        //SQL should read as:
+        //SQL reads:
         //SELECT order_items.*, full_order.server_name
         //FROM order_items JOIN full_order
-        //ON full_order.transaction_id = order_items.transaction_id
         //WHERE full_order.server_name = 'serverName'
         //AND full_order.date BETWEEN oldDate AND nowDate
 
         String SQL_join = "select " + oi_table+ ".*, "
-                + orders_table + "." + fo_col7
+                + orders_table + "." + fo_col7 + ", "
+                + orders_table + "." + fo_col3
                 + " from " + oi_table + " join "
-                + orders_table+ " on " + orders_table+ "."
-                + fo_col1+  " = " + oi_table + "."
-                + oi_col1 +" where " + orders_table + "."
-                + fo_col7 + " = '" + serverName + "' and "
+                + orders_table + " where " + fo_col7
+                + " = '" + serverName + "' " + " and "
                 + orders_table + "." + fo_col3 + " between '"
                 + oldDate + "' and '" + nowDate + "' ";
 
 
             Cursor c = db.rawQuery(SQL_join, null);
             return c;
-
     }
 
 
-//placeholder for getting daily server report
+    //gets day-of server report by joining the information in the order items table
+    //with the server name from the full orders table
+    public Cursor getServerDaily(String serverName)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Log.d("date: ", " before lmao " );
+        //get current date and convert to string
+        Cursor c1 = db.rawQuery("select date('now')", null);
+        c1.moveToFirst();
+        String nowDate = c1.getString(0);
+
+        Log.d("date: ", "now= " + nowDate);
+
+        //SQL reads:
+        //SELECT order_items.*, full_order.server_name
+        //FROM order_items JOIN full_order
+        //WHERE full_order.server_name = 'serverName'
+        //AND full_order.date = 'nowDate'
+
+        String SQL_join = "select " + oi_table+ ".*, "
+                + orders_table + "." + fo_col7 + ", "
+                + orders_table + "." + fo_col3
+                + " from " + oi_table + " join "
+                + orders_table + " where " + fo_col7
+                + " = '" + serverName + "' " + " and "
+                + orders_table + "." + fo_col3 + " = '"
+                + nowDate + "' ";
+
+        Log.d("DATE JOIN: ", SQL_join);
+
+
+        Cursor c = db.rawQuery(SQL_join, null);
+        return c;
+
+    }
+
+    //a method to get a specific order's status
+    //by inputting transaction id
+    //returns that order's status in the form of a string
+    public String getOrderStatus(int transactionId)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        //SQL reads as:
+        //select full_order.order_status from full_order where transaction_id = transactionId
+        Cursor c = db.rawQuery("select " + orders_table + "." + fo_col5
+                + " from " + orders_table + " where "
+                + fo_col1 + " = " + transactionId, null);
+        c.moveToFirst();
+        String status = c.getString(0);
+
+        return status;
+    }
+
+    //method to update status of a specific order
+    // parameters are transactionId, newStatus
+    //returns true if updated appropriately
+    public boolean updateOrderStatus(int transactionId, String newStatus)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        //SQLite reads as:
+        //UPDATE full_order SET order_status = 'newStatus'
+        //WHERE transaction_id = transactionId
+
+        db.rawQuery("UPDATE " + orders_table
+                + " SET " + fo_col5 + " = '" + newStatus
+                + "' WHERE " + fo_col1 + " = " + transactionId, null);
+        return true;
+
+    }
+
+    //finds all orders that match the inputted status
+    //returns a list of all the order items under orders with
+    //that status
+    public Cursor filterOrderStatus(String status)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        //SQL reads as:
+        //select full_order.transaction_id, full_order.order_status,
+        //order_items.* from full_order join order_items
+        //where order_status = 'status'
+
+        String SQL_join = "select " + orders_table + "." + fo_col1
+                + orders_table + "." + fo_col5
+                + ", " + oi_table + ".*, from"
+                + orders_table + " join " + oi_table
+                + " where " + fo_col5 + " = '" + status + "'";
+
+
+        Cursor res = db.rawQuery(SQL_join, null);
+        return res;
+
+    }
 
 }
 
