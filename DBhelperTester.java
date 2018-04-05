@@ -1,4 +1,4 @@
-package project.manager;
+package com.example;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,10 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 
-public class DBhelper extends SQLiteOpenHelper {
+public class DBhelperTester extends SQLiteOpenHelper {
 
     //db name
     public static final String database_name = "electronic_rest.db";
@@ -62,7 +65,7 @@ public class DBhelper extends SQLiteOpenHelper {
     public static final String oi_col5 = "comped_flag"; //if the order item is comped, set flag to comped
     public static final String oi_col6 = "reasons_comped"; //enter reasons why it was comped
     public static final String oi_col7 = "oi_price"; //price of the actual order item, is = quantity * price
-    //from the menu items table
+                                                         //from the menu items table
 
 
     //columns in the allergens table
@@ -87,7 +90,7 @@ public class DBhelper extends SQLiteOpenHelper {
     public static final String ta_col3 = "server_name";   //server name
     public static final String ta_col4 = "order_id";   //associated order id
 
-    public DBhelper(Context context) {
+    public DBhelperTester(Context context) {
         super(context, database_name, null, 1);
         // SQLiteDatabase db = this.getWritableDatabase();
 
@@ -366,6 +369,26 @@ public class DBhelper extends SQLiteOpenHelper {
     //parameters are an operator (+/-), the amount to be changed, and
     //the tid (transaction id)
     //returns true if updated appropriately
+   /* public boolean updateOrderTotal(String operator, double amount, int tid)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        //SQLite reads as:
+        //UPDATE full_order SET order_total = order_total (+/-) amount
+        //WHERE transaction_id = tid
+        String SQL_stmt = "UPDATE " + orders_table
+                + " SET " + fo_col4 + " = " + fo_col4 + " " + operator + " "+
+                + amount + " WHERE " + fo_col1 + " = " + tid;
+
+        String SQL_stmt2 = "update full_order SET full_order.order_total = ( full_order.order_total + 3.0 ) where full_order.transaction_id = 0";
+
+        Log.d("SQL STMT: ", SQL_stmt2);
+
+        db.rawQuery("update full_order SET order_total = full_order.order_total + 3.0 where full_order.transaction_id = 0", null);
+
+        return true;
+
+    }*/
 
     public boolean updateOrderTotal(String operator, double amount, int tid)
     {
@@ -374,7 +397,7 @@ public class DBhelper extends SQLiteOpenHelper {
 
         //get the old amount
         String SQL_sel = "select " + fo_col4 + " from " + orders_table
-                + " where " + fo_col1 + " = " + tid;
+                        + " where " + fo_col1 + " = " + tid;
 
         Cursor c1 = db.rawQuery(SQL_sel, null);
         c1.moveToFirst();
@@ -571,7 +594,7 @@ public class DBhelper extends SQLiteOpenHelper {
         Date date = new Date();
         return dateFormat.format(date);*/
 
-        SQLiteDatabase db = this.getWritableDatabase();
+       SQLiteDatabase db = this.getWritableDatabase();
         Cursor c1 = db.rawQuery("select date('now')", null);
         c1.moveToFirst();
         String nowDate = c1.getString(0);
@@ -633,7 +656,7 @@ public class DBhelper extends SQLiteOpenHelper {
                 + orders_table + "." + fo_col3 + " between '"
                 + oldDate + "' and '" + nowDate + "' ";
 
-        Log.d("DATE JOIN: ", SQL_join);
+       Log.d("DATE JOIN: ", SQL_join);
 
 
         Cursor c = db.rawQuery(SQL_join, null);
@@ -664,8 +687,8 @@ public class DBhelper extends SQLiteOpenHelper {
 
 
         String SQLSTMT = "select order_items.*, full_order.server_name, full_order.date"
-                + " from order_items join full_order"
-                + " where full_order.server_name = 'sandy'";
+                        + " from order_items join full_order"
+                        + " where full_order.server_name = 'sandy'";
 
         String SQL_join = "select " + oi_table+ ".*, "
                 + orders_table + "." + fo_col7 + ", "
@@ -748,10 +771,10 @@ public class DBhelper extends SQLiteOpenHelper {
         //where order_status = 'status'
 
         String SQL_join = "select " + orders_table + "." + fo_col1
-                + ", " +orders_table + "." + fo_col5
-                + ", " + oi_table + ".* from "
-                + orders_table + " join " + oi_table
-                + " where " + fo_col5 + " = '" + status + "' ";
+                            + ", " +orders_table + "." + fo_col5
+                            + ", " + oi_table + ".* from "
+                            + orders_table + " join " + oi_table
+                            + " where " + fo_col5 + " = '" + status + "' ";
 
 
         Cursor res = db.rawQuery(SQL_join, null);
@@ -811,7 +834,7 @@ public class DBhelper extends SQLiteOpenHelper {
     //used to add full menu item
     //adds full music item and returns true if successful
     public boolean addFullMenuItem(String itemName, String itemType, double price, String specialTag,
-                                   int calories, int protien, int sodium, int sugar, String imageName)
+                                    int calories, int protien, int sodium, int sugar, String imageName)
     {
         //create a database object
         SQLiteDatabase db = this.getWritableDatabase();
@@ -918,6 +941,6 @@ public class DBhelper extends SQLiteOpenHelper {
         Cursor res = db.rawQuery("select * from " + ta_table, null);
         return res;
     }
-    
+
 }
 
