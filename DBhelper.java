@@ -48,6 +48,7 @@ public class DBhelper extends SQLiteOpenHelper {
     public static final String mi_col7 = "protein";
     public static final String mi_col8 = "sodium";
     public static final String mi_col9 = "sugar";
+    public static final String mi_col10 = "image_name"; //image for the menu item
 
     //columns in the order items table, the bridge table between
     //full order and individual menu items - composed mostly of primary keys
@@ -61,6 +62,7 @@ public class DBhelper extends SQLiteOpenHelper {
     public static final String oi_col6 = "reasons_comped"; //enter reasons why it was comped
     public static final String oi_col7 = "oi_price"; //price of the actual order item, is = quantity * price
                                                      //from the menu items table
+
 
 
 
@@ -83,7 +85,7 @@ public class DBhelper extends SQLiteOpenHelper {
         //creates the full orders table
         db.execSQL("create table " + orders_table +
                 "( " + fo_col1 + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + fo_col2 + " INTEGER, "
+                + fo_col2 + " TEXT, "
                 + fo_col3 + " DATETIME, "
                 + fo_col4 + " REAL, "
                 + fo_col5 + " TEXT, "
@@ -100,7 +102,8 @@ public class DBhelper extends SQLiteOpenHelper {
                 + mi_col6 + " INTEGER, "
                 + mi_col7 + " INTEGER, "
                 + mi_col8 + " INTEGER, "
-                + mi_col9 + " INTEGER)");
+                + mi_col9 + " INTEGER, "
+                + mi_col10 + " TEXT)");
 
 
         //creates the order items table (updated to add order item id
@@ -205,6 +208,11 @@ public class DBhelper extends SQLiteOpenHelper {
         contentvalues.put(oi_col6, " "); //reasons are left blank
         contentvalues.put(oi_col7, cost);
 
+        boolean upcost = updateOrderTotal("+", cost, transactionId );
+        if(upcost)
+            Log.d("updated? ", "yes");
+        else
+            Log.d("updated? ", "no");
 
         long result = db.insert(oi_table, null, contentvalues);
         if(result == -1)
@@ -289,14 +297,27 @@ public class DBhelper extends SQLiteOpenHelper {
     public boolean updateOrderTotal(String operator, double amount, int tid)
     {
         SQLiteDatabase db = this.getWritableDatabase();
+        double newAmount = 0.0; //placeholder for new amount
 
-        //SQLite reads as:
-        //UPDATE full_order SET order_total = order_total (+/-) amount
-        //WHERE transaction_id = tid
+        //get the old amount
+        String SQL_sel = "select " + fo_col4 + " from " + orders_table
+                + " where " + fo_col1 + " = " + tid;
 
-        db.rawQuery("UPDATE " + orders_table
-                + " SET " + fo_col4 + " = " + fo_col4 + operator
-                + amount + " WHERE " + fo_col1 + " = " + tid, null);
+        Cursor c1 = db.rawQuery(SQL_sel, null);
+        c1.moveToFirst();
+        double oldAmount = c1.getDouble(0);
+
+        //add/subtract new amount
+        if(operator == "+")
+            newAmount = oldAmount + amount;
+        else
+            newAmount = oldAmount - amount;
+
+        //update row using content values
+        ContentValues values = new ContentValues();
+        values.put(fo_col4, newAmount);
+
+        db.update(orders_table, values, fo_col1 + " = " + tid, null);
         return true;
 
     }
@@ -322,16 +343,32 @@ public class DBhelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         int flag = 1;
 
-        //SQLite should read as:
-        //UPDATE order_items SET comped_flag = 1,
-        //reasons_comped = 'comment', oi_price = 0.0
-        //WHERE oi_id = orderid
-        db.rawQuery("UPDATE " + oi_table
-                + " SET " + oi_col5 + " = " + flag + ", "
-                + oi_col6 + " = '" + comment + "', "
-                + oi_col7 + " = 0.0 "
-                + " WHERE " + oi_col0 + " = " + orderid, null);
+        //get the old amount and transaction id
+        String SQL_sel = "select " + oi_col7 + ", " + oi_col1 + " from " + oi_table
+                + " where " + oi_col0 + " = " + orderid;
+
+        Cursor c1 = db.rawQuery(SQL_sel, null);
+        c1.moveToFirst();
+        double oldAmount = c1.getDouble(0);
+        int transactionId = c1.getInt(1);
+
+        //update total in order
+        boolean upcost = updateOrderTotal("-", oldAmount, transactionId );
+        if(upcost)
+            Log.d("updated? ", "yes");
+        else
+            Log.d("updated? ", "no");
+
+
+        //update row using content values
+        ContentValues values = new ContentValues();
+        values.put(oi_col5, flag);
+        values.put(oi_col6, comment);
+        values.put(oi_col7, 0.0);
+
+        db.update(oi_table, values, oi_col0 + " = " + orderid, null);
         return true;
+
     }
 
     //retrieves individual comped items from db
@@ -434,14 +471,17 @@ public class DBhelper extends SQLiteOpenHelper {
     }
 
 
-    //a function to get both date and time
+    //function updated to get only the date
     //returns this as a string
     public String getDateTime()
     {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm",
-                Locale.getDefault());
-        Date date = new Date();
-        return dateFormat.format(date);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c1 = db.rawQuery("select date('now')", null);
+        c1.moveToFirst();
+        String nowDate = c1.getString(0);
+        return nowDate;
+
     }
 
 
@@ -544,13 +584,11 @@ public class DBhelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        //SQLite reads as:
-        //UPDATE full_order SET order_status = 'newStatus'
-        //WHERE transaction_id = transactionId
+        //update row using content values
+        ContentValues values = new ContentValues();
+        values.put(fo_col5, newStatus);
 
-        db.rawQuery("UPDATE " + orders_table
-                + " SET " + fo_col5 + " = '" + newStatus
-                + "' WHERE " + fo_col1 + " = " + transactionId, null);
+        db.update(orders_table, values, fo_col1 + " = " + transactionId, null);
         return true;
 
     }
@@ -568,10 +606,10 @@ public class DBhelper extends SQLiteOpenHelper {
         //where order_status = 'status'
 
         String SQL_join = "select " + orders_table + "." + fo_col1
-                + orders_table + "." + fo_col5
-                + ", " + oi_table + ".*, from"
+                + ", " + orders_table + "." + fo_col5
+                + ", " + oi_table + ".* from "
                 + orders_table + " join " + oi_table
-                + " where " + fo_col5 + " = '" + status + "'";
+                + " where " + fo_col5 + " = '" + status + "' ";
 
 
         Cursor res = db.rawQuery(SQL_join, null);
