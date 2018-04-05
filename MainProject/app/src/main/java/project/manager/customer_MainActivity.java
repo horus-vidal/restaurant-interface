@@ -70,6 +70,7 @@ public class customer_MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.customer_activity_main);
+        setTitle("Hello, [CUSTOMERNAME]!"); //lets make the titles more personal.
 
 
         ImageButton FoodBtn = (ImageButton) findViewById(R.id.FoodBtn);
@@ -117,13 +118,8 @@ public class customer_MainActivity extends AppCompatActivity {
                 Intent startIntent = new Intent(getApplicationContext(), customer_DailySpecial.class);
 
                 startActivity(startIntent);
-
-
             }
         });
     }
-
-
-
 }
 
