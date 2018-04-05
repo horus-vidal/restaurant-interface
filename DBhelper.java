@@ -22,10 +22,13 @@ public class DBhelper extends SQLiteOpenHelper {
     public static final String orders_table = "full_order";
     public static final String oi_table = "order_items";
     public static final String mi_table = "menu_items";
-   // public static final String ds_table = "daily_specials";
+    // public static final String ds_table = "daily_specials";
     //public static final String ci_table = "comped_items";
     public static final String al_table = "allergens_table";
     public static final String mu_table = "music_table";
+    public static final String ws_table = "waitStaff_table";
+    public static final String ta_table = "tables_table";
+
 
 
 
@@ -44,7 +47,7 @@ public class DBhelper extends SQLiteOpenHelper {
     public static final String mi_col3 = "item_type"; //appetizer, entree, etc
     public static final String mi_col4 = "price";   //item price
     public static final String mi_col5 = "special_tag"; //if the menu item is a special, the special
-                                                        //tag is set with a day
+    //tag is set with a day
     public static final String mi_col6 = "calories"; //the rest are nutrition facts
     public static final String mi_col7 = "protein";
     public static final String mi_col8 = "sodium";
@@ -62,7 +65,7 @@ public class DBhelper extends SQLiteOpenHelper {
     public static final String oi_col5 = "comped_flag"; //if the order item is comped, set flag to comped
     public static final String oi_col6 = "reasons_comped"; //enter reasons why it was comped
     public static final String oi_col7 = "oi_price"; //price of the actual order item, is = quantity * price
-                                                     //from the menu items table
+    //from the menu items table
 
 
     //columns in the allergens table
@@ -76,6 +79,16 @@ public class DBhelper extends SQLiteOpenHelper {
     public static final String mu_col3 = "length";   //song length
     public static final String mu_col4 = "album_art";   //album art
 
+    //columns for the waitstaff table
+    public static final String ws_col1 = "server_name";    //server name
+    public static final String ws_col2 = "status";   //status on/off clock
+    public static final String ws_col3 = "password";   //password
+
+    //columns for the tables table
+    public static final String ta_col1 = "table_number";    //table number
+    public static final String ta_col2 = "customer_id";   //customer id
+    public static final String ta_col3 = "server_name";   //server name
+    public static final String ta_col4 = "order_id";   //associated order id
 
     public DBhelper(Context context) {
         super(context, database_name, null, 1);
@@ -86,6 +99,12 @@ public class DBhelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
+        //creates the waitstaff table
+        db.execSQL("create table " + ws_table +
+                "( " + ws_col1 + " TEXT, "
+                + ws_col2 + " TEXT, "
+                + ws_col3 + " TEXT ) ");
+
         //creates the full orders table
         db.execSQL("create table " + orders_table +
                 "( " + fo_col1 + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -94,7 +113,9 @@ public class DBhelper extends SQLiteOpenHelper {
                 + fo_col4 + " REAL, "
                 + fo_col5 + " TEXT, "
                 + fo_col6 + " INTEGER, "
-                + fo_col7 + " TEXT)");
+                + fo_col7 + " TEXT, "
+                + "FOREIGN KEY( " + fo_col7+ " ) REFERENCES "
+                + ws_table + "( "  + ws_col1 + " )) ");
 
         //creates the menu items table
         db.execSQL("create table " + mi_table +
@@ -143,6 +164,19 @@ public class DBhelper extends SQLiteOpenHelper {
                 + mu_col2 + " TEXT, "
                 + mu_col3 + " TEXT, "
                 + mu_col4 + " TEXT)");
+
+        //creates the tables
+        db.execSQL("create table " + ta_table +
+                "( " + ta_col1 +  " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + ta_col2 + " TEXT, "
+                + ta_col3 + " TEXT, "
+                + ta_col4 + " INTEGER, "
+                + "FOREIGN KEY( " + ta_col2+ " ) REFERENCES "
+                + orders_table + "( "  + fo_col2 + " ), "
+                + "FOREIGN KEY( " + ta_col4+ " ) REFERENCES "
+                + orders_table + "( "  + fo_col1+ " ), "
+                + "FOREIGN KEY( " + ta_col3 + " ) REFERENCES "
+                + ws_table + "( "  + ws_col1 + " )) ");
     }
 
     @Override
@@ -154,6 +188,8 @@ public class DBhelper extends SQLiteOpenHelper {
         db.execSQL("drop table if exists " + oi_table);
         db.execSQL("drop table if exists " + al_table);
         db.execSQL("drop table if exists " + mu_table);
+        db.execSQL("drop table if exists " + ws_table);
+        db.execSQL("drop table if exists " + ta_table);
 
         onCreate(db);
 
@@ -207,9 +243,9 @@ public class DBhelper extends SQLiteOpenHelper {
         //create values for a new order item
         ContentValues contentvalues = new ContentValues();
 
-
+        Log.d("ABOVE PRICE CALL", "ITEM NAME IS: " + itemName );
         //get total order item cost
-       double cost = getOrderItemPrice(itemName, quantity);
+        double cost = getOrderItemPrice(itemName, quantity);
 
         //add values to db
         contentvalues.put(oi_col1, transactionId);
@@ -219,6 +255,7 @@ public class DBhelper extends SQLiteOpenHelper {
         contentvalues.put(oi_col5, 0);  //originally not comped, so flags are set to 0 and
         contentvalues.put(oi_col6, " "); //reasons are left blank
         contentvalues.put(oi_col7, cost);
+
 
         boolean upcost = updateOrderTotal("+", cost, transactionId );
         if(upcost)
@@ -232,38 +269,17 @@ public class DBhelper extends SQLiteOpenHelper {
         else return true;
     }
 
-    //a method to get total order item price, searches for menu item by name
-    //multiplies the found price by quantity and returns total cost
-    public double getOrderItemPrice(String name, int quantity)
+    //test method
+    //method to get all data from the order table
+    //added for debugging, can stay if necessary
+    public Cursor getOrderItemData()
     {
-        //create price containers
-        double itemTotal = 0.0;
-        double miprice = 0.0;
-
-        //create a database object
         SQLiteDatabase db = this.getWritableDatabase();
-
-
-
-        //query the database
-        //SQL reads as:
-        //select price from menu_items where item_name = 'name'
-        Cursor c = db.rawQuery("select " + mi_col4 + " from " + mi_table
-                + " where " + mi_col2 + " = " + " '" +  name + "' ", null);
-
-        c.moveToFirst();
-
-        //convert result to double and multiply by quantity.
-       miprice = c.getDouble(0);
-       itemTotal = miprice * quantity;
-
-        return itemTotal;
-
-
+        Cursor res = db.rawQuery("select * from " + oi_table, null);
+        return res;
     }
 
-    //test method to add a menu item
-    //returns true if successfull
+    //test method
     public boolean addMenuItem(String itemName, String itemType, double price)
     {
         //create a database object
@@ -282,8 +298,16 @@ public class DBhelper extends SQLiteOpenHelper {
         else return true;
     }
 
-    //test method to add an allergen
-    //returns true if successfull
+    //test method to get all data from the menu table
+    //added for debugging, can stay if necessary
+    public Cursor getMenutable()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from " + mi_table, null);
+        return res;
+    }
+
+    //test method
     public boolean addAllergen(String allergen, String name, String type)
     {
         //create a database object
@@ -302,8 +326,47 @@ public class DBhelper extends SQLiteOpenHelper {
         else return true;
     }
 
+    //test method to get all data from the menu table
+    //added for debugging, can stay if necessary
+    public Cursor getaltable()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from " + al_table, null);
+        return res;
+    }
+
+    //a method to get total order item price, searches for menu item by name
+    //multiplies the found price by quantity and returns total cost
+    public double getOrderItemPrice(String name, int quantity)
+    {
+        //create price containers
+        double itemTotal = 0.0;
+        double miprice = 0.0;
+
+        //create a database object
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Log.d("ABOVE PRICE QUERY", "ITEM NAME IS: " + name);
+
+        //query the database
+        //SQL reads as:
+        //select price from menu_items where item_name = 'name'
+        Cursor c = db.rawQuery("select " + mi_col4 + " from " + mi_table
+                + " where " + mi_col2 + " = " + " '" +  name + "' ", null);
+
+        c.moveToFirst();
+
+        //convert result to double and multiply by quantity.
+        miprice = c.getDouble(0);
+        itemTotal = miprice * quantity;
+
+        return itemTotal;
+
+
+    }
+
     //method to update order total in case of comping or adding an order item
-    //paramaters are an operator (+/-), the ammount to be changed, and
+    //parameters are an operator (+/-), the amount to be changed, and
     //the tid (transaction id)
     //returns true if updated appropriately
     public boolean updateOrderTotal(String operator, double amount, int tid)
@@ -343,7 +406,7 @@ public class DBhelper extends SQLiteOpenHelper {
         //SQL reads as:
         //select * from menu_items where item_type = 'type'
         Cursor res = db.rawQuery("select * from " + mi_table
-                        + " where " + mi_col3 + " = '" + type + "' ", null);
+                + " where " + mi_col3 + " = '" + type + "' ", null);
         return res;
     }
 
@@ -417,6 +480,7 @@ public class DBhelper extends SQLiteOpenHelper {
 
     //looks for all items in the order items table with the same transaction
     //id and returns them
+    //can also be used to print an itemized receipt under 1 order
     public Cursor getAllItems(int transid)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -441,12 +505,12 @@ public class DBhelper extends SQLiteOpenHelper {
         //ON menu_items.item_name = allergens_table.item_name
         //WHERE allergens_table.allergen != '(first item in the allergens ArrayList)'
         String SQL_join = "select " + mi_table + ".*, "
-                    + al_table + "." + al_col1
-                    + " from " + mi_table + " join "
-                    + al_table + " on " + mi_table + "."
-                    + mi_col2 +  " = " + al_table + "."
-                    + al_col2 +" where " + al_table + "."
-                    + al_col1 + " != '" + allergens.get(0) + "' ";
+                + al_table + "." + al_col1
+                + " from " + mi_table + " join "
+                + al_table + " on " + mi_table + "."
+                + mi_col2 +  " = " + al_table + "."
+                + al_col2 +" where " + al_table + "."
+                + al_col1 + " != '" + allergens.get(0) + "' ";
 
         //if the size of the allergens arraylist is bigger than 1,
         //loop through the array and add an additional and statement
@@ -469,13 +533,13 @@ public class DBhelper extends SQLiteOpenHelper {
 
             SQL_join = SQL_join + extraQuery;
 
-
+            Log.d("BIG JOIN: ", SQL_join);
 
             Cursor res2 = db.rawQuery(SQL_join, null);
             return res2;
         }
 
-
+        Log.d("LITTLE JOIN: ", SQL_join);
         //if there is only one allergen, the function drops to this statement and prints
         //out the results for only one
         Cursor res = db.rawQuery(SQL_join, null);
@@ -483,19 +547,21 @@ public class DBhelper extends SQLiteOpenHelper {
     }
 
 
-    //function updated to get only the date
+    //a function to get both date and time
     //returns this as a string
     public String getDateTime()
     {
+        /*SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm",
+                Locale.getDefault());
+        Date date = new Date();
+        return dateFormat.format(date);*/
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor c1 = db.rawQuery("select date('now')", null);
         c1.moveToFirst();
         String nowDate = c1.getString(0);
         return nowDate;
-
     }
-
 
     //gets weekly server report by joining the information in the order items table
     //with the server name from the full orders table
@@ -503,15 +569,39 @@ public class DBhelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
+        Log.d("date: ", " before lmao " );
         //get current date and convert to string
         Cursor c1 = db.rawQuery("select date('now')", null);
         c1.moveToFirst();
         String nowDate = c1.getString(0);
 
+        Log.d("date: ", "now= " + nowDate);
+
         //get date from a week ago and convert to string
         Cursor c2 = db.rawQuery("select date('now', '-7 day')", null);
         c2.moveToFirst();
         String oldDate = c2.getString(0);
+
+        Log.d("date: ", "then= " + nowDate);
+
+
+        //SQL  reads:
+        //SELECT order_items.*, full_order.server_name
+        //FROM order_items JOIN full_order
+        //ON full_order.transaction_id = order_items.transaction_id
+        //WHERE full_order.server_name = 'serverName'
+        //AND full_order.date BETWEEN oldDate AND nowDate
+
+        /*String SQL_join_old = "select " + oi_table+ ".*, "
+                + orders_table + "." + fo_col7
+                + " from " + oi_table + " join "
+                + orders_table+ " on " + orders_table+ "."
+                + fo_col1+  " = " + oi_table + "."
+                + oi_col1 +" where " + orders_table + "."
+                + fo_col7 + " = '" + serverName + "' and "
+                + orders_table + "." + fo_col3 + " between '"
+                + oldDate + "' and '" + nowDate + "' ";*/
+
 
         //SQL reads:
         //SELECT order_items.*, full_order.server_name
@@ -528,11 +618,13 @@ public class DBhelper extends SQLiteOpenHelper {
                 + orders_table + "." + fo_col3 + " between '"
                 + oldDate + "' and '" + nowDate + "' ";
 
+        Log.d("DATE JOIN: ", SQL_join);
 
-            Cursor c = db.rawQuery(SQL_join, null);
-            return c;
+
+        Cursor c = db.rawQuery(SQL_join, null);
+        return c;
+
     }
-
 
     //gets day-of server report by joining the information in the order items table
     //with the server name from the full orders table
@@ -540,13 +632,14 @@ public class DBhelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
-
+        Log.d("date: ", " before lmao " );
         //get current date and convert to string
         Cursor c1 = db.rawQuery("select date('now')", null);
         c1.moveToFirst();
         String nowDate = c1.getString(0);
 
 
+        Log.d("date: ", "now= " + nowDate);
 
         //SQL reads:
         //SELECT order_items.*, full_order.server_name
@@ -554,16 +647,21 @@ public class DBhelper extends SQLiteOpenHelper {
         //WHERE full_order.server_name = 'serverName'
         //AND full_order.date = 'nowDate'
 
+
+        String SQLSTMT = "select order_items.*, full_order.server_name, full_order.date"
+                + " from order_items join full_order"
+                + " where full_order.server_name = 'sandy'";
+
         String SQL_join = "select " + oi_table+ ".*, "
                 + orders_table + "." + fo_col7 + ", "
                 + orders_table + "." + fo_col3
                 + " from " + oi_table + " join "
-                + orders_table + " where " + fo_col7
-                + " = '" + serverName + "' " + " and "
+                + orders_table + " where " + orders_table + "." + fo_col7
+                + " = '" + serverName + "' and "
                 + orders_table + "." + fo_col3 + " = '"
                 + nowDate + "' ";
 
-
+        Log.d("DATE JOIN: ", SQL_join);
 
 
         Cursor c = db.rawQuery(SQL_join, null);
@@ -580,6 +678,8 @@ public class DBhelper extends SQLiteOpenHelper {
 
         //SQL reads as:
         //select full_order.order_status from full_order where transaction_id = transactionId
+
+        Log.d("tag: ", "above query");
         Cursor c = db.rawQuery("select " + orders_table + "." + fo_col5
                 + " from " + orders_table + " where "
                 + fo_col1 + " = " + transactionId, null);
@@ -589,9 +689,6 @@ public class DBhelper extends SQLiteOpenHelper {
         return status;
     }
 
-    //method to update status of a specific order
-    // parameters are transactionId, newStatus
-    //returns true if updated appropriately
     public boolean updateOrderStatus(int transactionId, String newStatus)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -618,7 +715,7 @@ public class DBhelper extends SQLiteOpenHelper {
         //where order_status = 'status'
 
         String SQL_join = "select " + orders_table + "." + fo_col1
-                + ", " + orders_table + "." + fo_col5
+                + ", " +orders_table + "." + fo_col5
                 + ", " + oi_table + ".* from "
                 + orders_table + " join " + oi_table
                 + " where " + fo_col5 + " = '" + status + "' ";
@@ -629,8 +726,7 @@ public class DBhelper extends SQLiteOpenHelper {
 
     }
 
-    //method to add a special item to the menu using the specialtag/day
-    //returns true if added appropriately
+    //test method
     public boolean addSpecialItem(String itemName, String itemType, double price, String specialTag)
     {
         //create a database object
@@ -670,6 +766,15 @@ public class DBhelper extends SQLiteOpenHelper {
         else return true;
     }
 
+    //test method to get all data from the menu table
+    //added for debugging, can stay if necessary
+    public Cursor getMUtable()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from " + mu_table, null);
+        return res;
+    }
+
     //used to add full menu item
     //adds full music item and returns true if successful
     public boolean addFullMenuItem(String itemName, String itemType, double price, String specialTag,
@@ -697,6 +802,90 @@ public class DBhelper extends SQLiteOpenHelper {
             return false;
         else return true;
     }
+
+    //adds login to waitstaff
+    public boolean WSlogin(String serverName, String password)
+    {
+        //create a database object
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        //create values for the first instance of an order
+        ContentValues contentvalues = new ContentValues();
+
+
+        //adds initial values to ws
+        contentvalues.put(ws_col1, serverName);
+        contentvalues.put(ws_col2, "logged in");
+        contentvalues.put(ws_col3, password );
+
+        for(int i = 0; i < 4; i++) {
+            boolean linked = linkTables(serverName);
+            if (linked)
+                Log.d("linked ", "yes, " + i);
+            else
+                Log.d("linked? ", "no, " + i);
+        }
+
+        //checks to make sure the table was inserted successfully
+        long result = db.insert(ws_table, null, contentvalues);
+        if(result == -1)
+            return false;
+        else return true;
+
+    }
+
+    //links tables to waitstaff
+    public boolean linkTables(String serverName)
+    {
+        //create a database object
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        //create values for the first instance of an order
+        ContentValues contentvalues = new ContentValues();
+
+
+        //adds initial values to order
+        contentvalues.put(ta_col2, "no one for now..");
+        contentvalues.put(ta_col3, serverName);
+
+        //checks to make sure the table was inserted successfully
+        long result = db.insert(ta_table, null, contentvalues);
+        if(result == -1)
+            return false;
+        else return true;
+
+    }
+
+    //test method to get all data from the menu table
+    //added for debugging, can stay if necessary
+    public Cursor getWStable()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from " + ws_table, null);
+        return res;
+    }
+
+    public boolean updatetables(String customerId, int transactionId)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        //update row using content values
+        ContentValues values = new ContentValues();
+        values.put(ta_col2, customerId);
+        values.put(ta_col4, transactionId);
+
+        db.update(ta_table, values, ta_col1 + " = " + transactionId, null);
+        return true;
+
+    }
+
+    public Cursor gettables()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from " + ta_table, null);
+        return res;
+    }
+
 
 
 }
