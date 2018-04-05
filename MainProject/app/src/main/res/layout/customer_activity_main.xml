@@ -30,7 +30,7 @@
             android:layout_marginTop="31dp"
             android:adjustViewBounds="false"
             android:backgroundTint="@android:color/transparent"
-            app:srcCompat="@mipmap/agames" />
+            app:srcCompat="@mipmap/Agames_150x150" />
 
     <ImageButton
         android:id="@+id/DSBtn"

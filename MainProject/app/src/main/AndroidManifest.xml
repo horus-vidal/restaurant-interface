@@ -72,19 +72,19 @@
             android:name=".Waitstaff_item_details"
             android:parentActivityName=".Waitstaff_MainScreen"
             android:screenOrientation="landscape" />
-        <activity android:name=".customer_MainActivity" />
-        <!-- <<<<<<< HEAD -->
-        android:parentActivityName=".MainProjectScreen" />
-        <!-- android:screenOrientation="landscape" /> -->
-        <!-- ======= -->
-        <!-- android:parentActivityName=".MainProjectScreen" -->
-        <!-- android:screenOrientation="landscape" /> -->
-
-
-        <!-- &gt;>>>>>> f19c78e487359097d8a1a7bd6d4e8b52c71a324e -->
         <activity
-            android:name=".customer_login"
-            android:screenOrientation="landscape" />
+            android:name=".customer_MainActivity" />
+<!--<<<<<<< HEAD-->
+            android:parentActivityName=".MainProjectScreen" />
+            <!--android:screenOrientation="landscape" />-->
+<!--=======-->
+            <!--android:parentActivityName=".MainProjectScreen"-->
+            <!--android:screenOrientation="landscape" />-->
+
+<!--&gt;>>>>>> f19c78e487359097d8a1a7bd6d4e8b52c71a324e -->
+        <activity android:name=".customer_login"
+            android:screenOrientation="landscape"/>
+
         <activity android:name=".customer_Food" />
         <activity android:name=".customer_Entrees" />
         <activity android:name=".customer_drink" />
@@ -93,10 +93,12 @@
         <activity android:name=".customer_Selection" />
         <activity android:name=".customer_Mods" />
         <activity android:name=".customer_Music" />
+        <activity
+            android:name=".customer_Games"
+            android:label="@string/title_activity_games"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".customer_cart" />
         <activity android:name=".customer_DailySpecial" />
-        <activity android:name=".games" />
-        <activity android:name=".ttt_main"></activity>
     </application>
 
 </manifest>
