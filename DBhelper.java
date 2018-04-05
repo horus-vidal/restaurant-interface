@@ -25,6 +25,7 @@ public class DBhelper extends SQLiteOpenHelper {
    // public static final String ds_table = "daily_specials";
     //public static final String ci_table = "comped_items";
     public static final String al_table = "allergens_table";
+    public static final String mu_table = "music_table";
 
 
 
@@ -64,13 +65,16 @@ public class DBhelper extends SQLiteOpenHelper {
                                                      //from the menu items table
 
 
-
-
-
     //columns in the allergens table
     public static final String al_col1 = "allergen";    //allergen type
     public static final String al_col2 = "item_name";   //item name, from menu items
     public static final String al_col3 = "item_type";   //item type, from menu items
+
+    //columns in the music table
+    public static final String mu_col1 = "artist";    //artist name
+    public static final String mu_col2 = "title";   //song title
+    public static final String mu_col3 = "length";   //song length
+    public static final String mu_col4 = "album_art";   //album art
 
 
     public DBhelper(Context context) {
@@ -132,6 +136,13 @@ public class DBhelper extends SQLiteOpenHelper {
                 + mi_table + "( "  + mi_col2 + " ), "
                 + "FOREIGN KEY( " + al_col3 + " ) REFERENCES "
                 + mi_table + "( "  + mi_col3 + " )) ");
+
+        //creates the music table
+        db.execSQL("create table " + mu_table +
+                "( " + mu_col1 + " TEXT, "
+                + mu_col2 + " TEXT, "
+                + mu_col3 + " TEXT, "
+                + mu_col4 + " TEXT)");
     }
 
     @Override
@@ -142,6 +153,7 @@ public class DBhelper extends SQLiteOpenHelper {
         db.execSQL("drop table if exists " + mi_table);
         db.execSQL("drop table if exists " + oi_table);
         db.execSQL("drop table if exists " + al_table);
+        db.execSQL("drop table if exists " + mu_table);
 
         onCreate(db);
 
@@ -631,6 +643,54 @@ public class DBhelper extends SQLiteOpenHelper {
         contentvalues.put(mi_col3, itemType);
         contentvalues.put(mi_col4, price);
         contentvalues.put(mi_col5, specialTag);
+
+        long result = db.insert(mi_table, null, contentvalues);
+        if(result == -1)
+            return false;
+        else return true;
+    }
+
+    //adds full music item and returns true if successful
+    public boolean addFullMusicItem(String title, String artist, String length, String albumArt)
+    {
+        //create a database object
+        SQLiteDatabase db = this.getWritableDatabase();
+        //create values for a new order item
+        ContentValues contentvalues = new ContentValues();
+
+        //add values to db
+        contentvalues.put(mu_col1, artist);
+        contentvalues.put(mu_col2, title);
+        contentvalues.put(mu_col3, length);
+        contentvalues.put(mu_col4, albumArt);
+
+        long result = db.insert(mu_table, null, contentvalues);
+        if(result == -1)
+            return false;
+        else return true;
+    }
+
+    //used to add full menu item
+    //adds full music item and returns true if successful
+    public boolean addFullMenuItem(String itemName, String itemType, double price, String specialTag,
+                                   int calories, int protien, int sodium, int sugar, String imageName)
+    {
+        //create a database object
+        SQLiteDatabase db = this.getWritableDatabase();
+        //create values for a new order item
+        ContentValues contentvalues = new ContentValues();
+
+        //add values to db
+        contentvalues.put(mi_col2, itemName);
+        contentvalues.put(mi_col3, itemType);
+        contentvalues.put(mi_col4, price);
+        contentvalues.put(mi_col5, specialTag);
+        contentvalues.put(mi_col6, calories);
+        contentvalues.put(mi_col7, protien);
+        contentvalues.put(mi_col8, sodium);
+        contentvalues.put(mi_col9, sugar);
+        contentvalues.put(mi_col10, imageName);
+
 
         long result = db.insert(mi_table, null, contentvalues);
         if(result == -1)
