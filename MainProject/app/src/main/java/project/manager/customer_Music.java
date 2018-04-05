@@ -63,6 +63,8 @@ public class customer_Music extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.customer_activity_entrees);
 
+        setTitle("Music");
+
         ListView listView = (ListView) findViewById(R.id.EntreeList);
         custom_adapter customAdapter = new custom_adapter();
 

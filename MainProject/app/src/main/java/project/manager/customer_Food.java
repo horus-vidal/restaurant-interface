@@ -13,6 +13,8 @@ public class customer_Food extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.customer_activity_food);
+
+        setTitle("Menu");
         ImageButton EntreeBtn = (ImageButton) findViewById(R.id.FoodBtn);
         EntreeBtn.setOnClickListener(new View.OnClickListener() {
             @Override

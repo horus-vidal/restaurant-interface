@@ -104,7 +104,7 @@
         android:layout_alignBottom="@+id/Dessert"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:text="Back" />
+        android:text="Exit" />
 
     <Button
         android:id="@+id/CWBtn"

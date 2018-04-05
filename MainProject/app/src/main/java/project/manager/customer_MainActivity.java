@@ -63,6 +63,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 public class customer_MainActivity extends AppCompatActivity {
 
@@ -92,15 +93,30 @@ public class customer_MainActivity extends AppCompatActivity {
             }
         });
 
+        //returns to interface selection screen
         Button BackBtn = (Button) findViewById(R.id.BackBtn);
         BackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startIntent = new Intent(getApplicationContext(), customer_MainActivity.class);
+                Intent startIntent = new Intent(getApplicationContext(), MainProjectScreen.class);
                 startActivity(startIntent);
             }
         });
 
+        Button CWBtn = (Button) findViewById(R.id.CWBtn);
+        CWBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Waiter Called.", Toast.LENGTH_SHORT).show();
+
+                //Not sure if this button needs to take us anywhere or not. really it should just
+                //send some kind of message to the waiter's end.
+                /*
+                Intent startIntent = new Intent(getApplicationContext(), MainProjectScreen.class);
+                startActivity(startIntent);
+                */
+            }
+        });
 
         ImageButton GamesBtn = (ImageButton) findViewById(R.id.GamesBtn);
         GamesBtn.setOnClickListener(new View.OnClickListener() {

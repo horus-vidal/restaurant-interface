@@ -126,6 +126,8 @@ public class customer_drink extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.customer_activity_drink);
 
+        setTitle("Drinks");
+
         ListView listView = (ListView) findViewById(R.id.EntreeList);
         custom_adapter customAdapter = new custom_adapter();
 
