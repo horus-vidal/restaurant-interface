@@ -17,7 +17,7 @@ public class MainProjectScreen extends AppCompatActivity {
 
     // Start customer interface
     public void startCustomer(View view) {
-        Intent intent = new Intent(this, customer_MainActivity.class);
+        Intent intent = new Intent(this, customer_login.class);
         startActivity(intent);
     }
 
