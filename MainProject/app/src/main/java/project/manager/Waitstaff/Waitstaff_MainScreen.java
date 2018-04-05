@@ -35,23 +35,23 @@ public class Waitstaff_MainScreen extends AppCompatActivity {
                 EditText waiterPassword;
                 waiterPassword = (EditText) findViewById(R.id.waitstaff_password);
 
- //take this out lmao
+                //take this out lmao
                 Log.d("log: ", " LOGGED LMAO ");
 
-
                 //if waiters aren't fully staffed and user isn't already "clocked in", "clock in" waiter
-                if(myDb.getWaiterCount() < 4 && myDb.doesWaiterExist(waiterName.getText().toString()) == false)
-                {
+                if(myDb.doesWaiterExist(waiterName.getText().toString()) == true) {
+                    Toast.makeText(getApplicationContext(), ("Welcome back, " + waiterName.getText().toString()), Toast.LENGTH_SHORT).show();
+                    staff_sign_in();
+                }
+                else if(myDb.getWaiterCount() < 4){
                     myDb.WSlogin(waiterName.getText().toString(), waiterPassword.getText().toString());
-                    Toast.makeText(getApplicationContext(), (waiterName.getText().toString() + " signed in."), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), (waiterName.getText().toString() + " clocked in!."), Toast.LENGTH_SHORT).show();
+                    staff_sign_in();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "There are 4 waiters clocked in already.", Toast.LENGTH_SHORT).show();
                 }
 
-
-
-
-                //get password?
-
-                staff_sign_in();
             }
         });
     }
