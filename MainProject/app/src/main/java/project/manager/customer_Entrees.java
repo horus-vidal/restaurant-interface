@@ -1,42 +1,6 @@
-package project.manager;//package com.example.chimchilla.krustykrab;
+package project.manager;
 
-//import android.content.Context;
-//import android.content.Intent;
-//import android.os.Bundle;
-//import android.support.v7.app.AppCompatActivity;
-//import android.view.View;
-//import android.widget.AdapterView;
-//import android.widget.ListAdapter;
-//import android.widget.ListView;
-//
-//public class customer_Entrees extends AppCompatActivity {
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.customer_activity_entrees);
-//        String[] foods = {"Entree 1", "Entree 2", " Entree 3", " Entree 4"};
-//        ListAdapter stupidAdapter = new custom_adapter(this, foods);
-//        ListView EntreeList = (ListView) findViewById(R.id.EntreeList);
-//        EntreeList.setAdapter(stupidAdapter);
-//        EntreeList.setOnItemClickListener(
-//
-//                new AdapterView.OnItemClickListener() {
-//
-//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                        Context context = view.getContext();
-//                        String foods = String.valueOf(parent.getItemAtPosition(position));
-//                        Intent intent = new Intent(customer_Entrees.this, customer_Selection.class);
-//                        intent.putExtra("itemName", foods);
-//                        context.startActivity(intent);
-//                        ;
-//
-//                    }
-//                }
-//        );
-//
-//    }
-//}
+
 
 
 import android.content.Context;
@@ -51,74 +15,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-//package com.example.chimchilla.krustykrab;
-//public class Dessert extends AppCompatActivity {
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.customer_activity_dessert);
-//        final String[] NAMES = {"customer_Dessert 1", "customer_Dessert 2", " customer_Dessert 3", " customer_Dessert 4"};
-//        final String [] PRICE = {"$14.99", "$12.99", "$13.50", "$45.00"};
-//        ListAdapter stupidAdapter = new custom_adapter(this, NAMES);
-//        ListAdapter priceAdapter = new custom_adapter(this, PRICE);
-//
-//        ListView EntreeList = (ListView) findViewById(R.id.EntreeList);
-//        EntreeList.setAdapter(priceAdapter);
-//
-//        EntreeList.setOnItemClickListener(
-//
-//                new AdapterView.OnItemClickListener() {
-//
-//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                        Context context = view.getContext();
-//                        String Dessert = String.valueOf(parent.getItemAtPosition(position));
-//                        Intent intent = new Intent(Dessert.this, customer_Selection.class);
-//                        intent.putExtra("itemName", Dessert);
-//                        context.startActivity(intent);;
-//
-//
-//                      //  Toast.makeText( customer_Dessert.this,"Order Added: " + customer_Dessert, Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//        );
-//    }
-//}
-//
-//
-//import android.app.ListActivity;
-//import android.os.Bundle;
-//import android.widget.ListView;
-//
-//import java.util.ArrayList;
-//
-//
-//public class Dessert extends ListActivity {
-//
-//    public void onCreate(Bundle icicle) {
-//        super.onCreate(icicle);
-//        // 1. pass context and data to the custom adapter
-//        custom_adapter adapter = new custom_adapter(this, generateData());
-//
-//        // 2. Get ListView from customer_activity_mainvity_main.xml
-//        ListView listView = (ListView) findViewById(R.id.EntreeList);
-//
-//        // 3. setListAdapter
-//        listView.setAdapter(adapter);
-//    }
-//
-//    private ArrayList<customer_Items> generateData(){
-//        ArrayList<customer_Items> items = new ArrayList<customer_Items>();
-//        items.add(new customer_Items("Item 1","First Item on the list"));
-//        items.add(new customer_Items("Item 2","Second Item on the list"));
-//        items.add(new customer_Items("Item 3","Third Item on the list"));
-//
-//        return items;
-//    }
-//
-//}
 
-//package com.example.chimchilla.customlayout;
 
 public class customer_Entrees extends AppCompatActivity {
     int[] IMAGES = {R.drawable.ic_launcher_background, R.drawable.ic_launcher_foreground};

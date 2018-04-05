@@ -51,9 +51,7 @@
         <activity
             android:name=".Manager_MainScreen"
             android:parentActivityName=".MainProjectScreen"
-            android:screenOrientation="portrait"></activity>
-
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Waitstaff_MainScreen"
             android:parentActivityName=".MainProjectScreen"
@@ -70,15 +68,14 @@
             android:name=".Waitstaff_Order_details"
             android:parentActivityName=".Waitstaff_Table_Details"
             android:screenOrientation="landscape" />
-        <activity android:name=".Waitstaff_item_details"
+        <activity
+            android:name=".Waitstaff_item_details"
             android:parentActivityName=".Waitstaff_MainScreen"
             android:screenOrientation="landscape" />
-
-
         <activity
             android:name=".customer_MainActivity"
             android:parentActivityName=".MainProjectScreen"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
         <activity android:name=".customer_Food" />
         <activity android:name=".customer_Entrees" />
         <activity android:name=".customer_drink" />
@@ -90,13 +87,17 @@
         <activity
             android:name=".customer_Games"
             android:label="@string/title_activity_games"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".customer_cart" />
         <activity android:name=".customer_DailySpecial" />
         <activity android:name=".customer_DS_Monday" />
         <activity android:name=".customer_DS_Tuesday" />
-
-
+        <activity android:name=".customer_DS_Wednesday" />
+        <activity
+            android:name=".customer_DS_Thursday"
+            android:label="@string/title_activity_customer__ds__thursday"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".customer_DS_Friday"></activity>
     </application>
 
 </manifest>

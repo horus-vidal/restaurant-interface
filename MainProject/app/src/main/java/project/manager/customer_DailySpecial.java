@@ -29,22 +29,44 @@ public class customer_DailySpecial extends AppCompatActivity {
             case "Mon":
 
                 startIntent = new Intent(getApplicationContext(), customer_DS_Monday.class);
-
+                int MondayImage = R.drawable.ic_launcher_background;
+                String MondayOrder =  "Tuesday Daily Special";
+                String MondayPrice = "$19.99";
                 startActivity(startIntent);
-
-
                 break;
+
             case "Tue":
                 startIntent = new Intent(getApplicationContext(), customer_DS_Tuesday.class);
+                int TuesdayImage = R.drawable.ic_launcher_background;
+                String TuesdayOrder =  "Tuesday Daily Special";
+                String TuesdayPrice = "$19.99";
                 startActivity(startIntent);
                 break;
 
             case "WED":
-                System.out.println("ZZZZZZZZZZZZZZ");
+                startIntent = new Intent(getApplicationContext(), customer_DS_Wednesday.class);
+                int WednesdayImage = R.drawable.ic_launcher_background;
+                String WednesdayOrder =  "Tuesday Daily Special";
+                String WednesdayPrice = "$19.99";
+                startActivity(startIntent);
                 break;
 
-            default:
+            case "Thu":
+                startIntent = new Intent(getApplicationContext(), customer_DS_Thursday.class);
+                int ThursdayImage = R.drawable.ic_launcher_background;
+                String ThursdayOrder =  "Tuesday Daily Special";
+                String ThursdayPrice = "$19.99";
+                startActivity(startIntent);
+                break;
 
+            case "Fri":
+                startIntent = new Intent (getApplicationContext(), customer_DS_Friday.class);
+                startActivity (startIntent);
+                break;
+
+
+
+                default:
                 break;
 
         }
