@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0693CE"
-    tools:context="com.restaurant.my.waitstaffapp.TablesActivity">
+    tools:context="project.manager.Waitstaff_TablesActivity">
 
     <Button
         android:id="@+id/logout_button"
