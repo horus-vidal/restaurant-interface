@@ -17,6 +17,8 @@ public class Waitstaff_TablesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tables);
 
+        setTitle("[WAITER NAME]'s Tables");
+
         //LOG OUT BUTTON
         Button log_out_button = (Button) findViewById(R.id.logout_button);
         log_out_button.setOnClickListener(new View.OnClickListener() {

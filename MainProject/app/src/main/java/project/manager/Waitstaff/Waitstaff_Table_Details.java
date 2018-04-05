@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import project.manager.R;
 
@@ -25,6 +26,8 @@ public class Waitstaff_Table_Details extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table__details);
+
+        setTitle("Table [TABLE NUM]");
 
         Bundle b = getIntent().getExtras();
         String header = b.getString("tableHeader");
@@ -65,6 +68,7 @@ public class Waitstaff_Table_Details extends AppCompatActivity {
                 ListOrder.setAdapter(null);
             }
         });
+        Toast.makeText(getApplicationContext(), "Table Reset", Toast.LENGTH_SHORT).show();
 
     }
 

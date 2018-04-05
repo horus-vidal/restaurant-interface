@@ -24,6 +24,8 @@ public class Waitstaff_Order_details extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_details);
 
+        setTitle("Order [ORDER NUM]");
+
         Bundle new_b = getIntent().getExtras();
         String item_header = new_b.getString("itemHeader");
 
