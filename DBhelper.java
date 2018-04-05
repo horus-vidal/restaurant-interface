@@ -48,6 +48,7 @@ public class DBhelper extends SQLiteOpenHelper {
     public static final String mi_col7 = "protein";
     public static final String mi_col8 = "sodium";
     public static final String mi_col9 = "sugar";
+    public static final String mi_col10 = "image_name"; //image for the menu item
 
     //columns in the order items table, the bridge table between
     //full order and individual menu items - composed mostly of primary keys
@@ -61,6 +62,7 @@ public class DBhelper extends SQLiteOpenHelper {
     public static final String oi_col6 = "reasons_comped"; //enter reasons why it was comped
     public static final String oi_col7 = "oi_price"; //price of the actual order item, is = quantity * price
                                                      //from the menu items table
+
 
 
 
@@ -83,7 +85,7 @@ public class DBhelper extends SQLiteOpenHelper {
         //creates the full orders table
         db.execSQL("create table " + orders_table +
                 "( " + fo_col1 + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + fo_col2 + " INTEGER, "
+                + fo_col2 + " TEXT, "
                 + fo_col3 + " DATETIME, "
                 + fo_col4 + " REAL, "
                 + fo_col5 + " TEXT, "
@@ -100,7 +102,8 @@ public class DBhelper extends SQLiteOpenHelper {
                 + mi_col6 + " INTEGER, "
                 + mi_col7 + " INTEGER, "
                 + mi_col8 + " INTEGER, "
-                + mi_col9 + " INTEGER)");
+                + mi_col9 + " INTEGER, "
+                + mi_col10 + " TEXT)");
 
 
         //creates the order items table (updated to add order item id
@@ -568,10 +571,10 @@ public class DBhelper extends SQLiteOpenHelper {
         //where order_status = 'status'
 
         String SQL_join = "select " + orders_table + "." + fo_col1
-                + orders_table + "." + fo_col5
-                + ", " + oi_table + ".*, from"
+                + ", " + orders_table + "." + fo_col5
+                + ", " + oi_table + ".*, from "
                 + orders_table + " join " + oi_table
-                + " where " + fo_col5 + " = '" + status + "'";
+                + " where " + fo_col5 + " = '" + status + "' ";
 
 
         Cursor res = db.rawQuery(SQL_join, null);

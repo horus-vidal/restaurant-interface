@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background = "@drawable/krustykrabbg"
     tools:context="com.example.chimchilla.krustykrab.customer_Food">
 
     <RelativeLayout
@@ -65,8 +66,9 @@
             android:layout_marginRight="119dp"
             android:layout_toLeftOf="@+id/GamesBtn"
             android:layout_toStartOf="@+id/GamesBtn"
+            android:backgroundTint="@android:color/transparent"
             android:contentDescription="100dp"
-            app:srcCompat="@android:drawable/btn_star_big_on" />
+            app:srcCompat="@mipmap/projectbuttons_150x150" />
 
         <TextView
             android:id="@+id/Entree"
