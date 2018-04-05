@@ -30,7 +30,7 @@
             android:layout_marginTop="31dp"
             android:adjustViewBounds="false"
             android:backgroundTint="@android:color/transparent"
-            app:srcCompat="@mipmap/games1" />
+            app:srcCompat="@mipmap/Agames_150x150" />
 
     <ImageButton
         android:id="@+id/DSBtn"
@@ -39,8 +39,9 @@
         android:layout_alignLeft="@+id/GamesBtn"
         android:layout_alignStart="@+id/GamesBtn"
         android:layout_alignTop="@+id/MusicBtn"
+        android:backgroundTint="@android:color/transparent"
         android:contentDescription="@button for daily special"
-        app:srcCompat="@mipmap/dailyspecialbtn" />
+        app:srcCompat="@mipmap/ds_150x150" />
 
     <ImageButton
         android:id="@+id/MusicBtn"
@@ -50,20 +51,23 @@
         android:layout_alignStart="@+id/FoodBtn"
         android:layout_below="@+id/Entree"
         android:layout_marginTop="27dp"
+        android:backgroundTint="@android:color/transparent"
         android:contentDescription="@button for daily special"
-        app:srcCompat="@mipmap/musicbtnn" />
+        app:srcCompat="@mipmap/music_150x150" />
 
     <ImageButton
         android:id="@+id/FoodBtn"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignTop="@+id/GamesBtn"
-        android:layout_marginEnd="116dp"
-        android:layout_marginRight="116dp"
+        android:layout_marginEnd="114dp"
+        android:layout_marginRight="114dp"
         android:layout_toLeftOf="@+id/GamesBtn"
         android:layout_toStartOf="@+id/GamesBtn"
+        android:adjustViewBounds="false"
+        android:backgroundTint="@android:color/transparent"
         android:contentDescription="100dp"
-        app:srcCompat="@mipmap/krabby_patty_icon" />
+        app:srcCompat="@mipmap/food_1_150x150" />
 
     <TextView
         android:id="@+id/Entree"
@@ -75,7 +79,8 @@
         android:layout_marginBottom="13dp"
         android:layout_marginLeft="34dp"
         android:layout_marginStart="34dp"
-        android:text="Food" />
+        android:text="Food"
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/Games"
@@ -87,7 +92,8 @@
         android:layout_alignStart="@+id/DailySpecial"
         android:layout_marginLeft="11dp"
         android:layout_marginStart="11dp"
-        android:text="Games" />
+        android:text="Games"
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/Dessert"
@@ -97,7 +103,8 @@
         android:layout_alignLeft="@+id/Entree"
         android:layout_alignStart="@+id/Entree"
         android:layout_marginBottom="14dp"
-        android:text="Music" />
+        android:text="Music"
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/DailySpecial"
@@ -107,9 +114,10 @@
         android:layout_alignBottom="@+id/Dessert"
         android:layout_alignEnd="@+id/DSBtn"
         android:layout_alignRight="@+id/DSBtn"
+        android:gravity="start"
         android:text="Daily Special"
         android:textAlignment="textStart"
-        android:gravity="start" />
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/BackBtn"
