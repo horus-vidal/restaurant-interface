@@ -1,4 +1,4 @@
-package com.example.my.testapp;
+package project.manager;
 
 import android.content.ContentValues;
 import android.content.Context;
