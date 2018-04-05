@@ -4,126 +4,165 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="project.manager.Customer.customer_Food">
+    android:background = "@drawable/krustykrabbg"
+    tools:context="com.example.chimchilla.krustykrab.customer_Food">
 
-    <ImageButton
-        android:id="@+id/GamesBtn"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="64dp"
-        android:layout_marginRight="64dp"
-        android:layout_marginTop="30dp"
-        android:contentDescription="@button for daily special"
-        app:srcCompat="@android:drawable/btn_star_big_on" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.chimchilla.krustykrab.customer_MainActivity"><![CDATA[
 
-    <ImageButton
-        android:id="@+id/DSBtn"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignTop="@+id/MusicBtn"
-        android:layout_toEndOf="@+id/FoodBtn"
-        android:layout_toRightOf="@+id/FoodBtn"
-        android:contentDescription="@button for daily special"
-        app:srcCompat="@android:drawable/btn_star_big_on" />
-
-    <ImageButton
-        android:id="@+id/MusicBtn"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignLeft="@+id/FoodBtn"
-        android:layout_alignStart="@+id/FoodBtn"
-        android:layout_below="@+id/Entree"
-        android:layout_marginTop="27dp"
-        android:contentDescription="@button for daily special"
-        app:srcCompat="@android:drawable/btn_star_big_on" />
-
-    <ImageButton
-        android:id="@+id/FoodBtn"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignTop="@+id/GamesBtn"
-        android:layout_marginEnd="119dp"
-        android:layout_marginRight="119dp"
-        android:layout_toLeftOf="@+id/GamesBtn"
-        android:layout_toStartOf="@+id/GamesBtn"
-        android:contentDescription="100dp"
-        app:srcCompat="@android:drawable/btn_star_big_on" />
-
-    <TextView
-        android:id="@+id/Entree"
+    TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/FoodBtn"
-        android:layout_alignLeft="@+id/FoodBtn"
-        android:layout_alignStart="@+id/FoodBtn"
-        android:layout_marginBottom="13dp"
-        android:layout_marginLeft="34dp"
-        android:layout_marginStart="34dp"
-        android:text="Entree" />
+        android:text="Hello World!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/Drink"
+    ]]>
+
+        <ImageButton
+            android:id="@+id/GamesBtn"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="64dp"
+            android:layout_marginRight="64dp"
+            android:layout_marginTop="30dp"
+            android:contentDescription="@button for daily special"
+            app:srcCompat="@android:drawable/btn_star_big_on" />
+
+        <ImageButton
+            android:id="@+id/DSBtn"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignTop="@+id/MusicBtn"
+            android:layout_toEndOf="@+id/FoodBtn"
+            android:layout_toRightOf="@+id/FoodBtn"
+            android:contentDescription="@button for daily special"
+            app:srcCompat="@android:drawable/btn_star_big_on" />
+
+        <ImageButton
+            android:id="@+id/MusicBtn"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignLeft="@+id/FoodBtn"
+            android:layout_alignStart="@+id/FoodBtn"
+            android:layout_below="@+id/Entree"
+            android:layout_marginTop="27dp"
+            android:contentDescription="@button for daily special"
+            app:srcCompat="@android:drawable/btn_star_big_on" />
+
+        <ImageButton
+            android:id="@+id/FoodBtn"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignTop="@+id/GamesBtn"
+            android:layout_marginEnd="119dp"
+            android:layout_marginRight="119dp"
+            android:layout_toLeftOf="@+id/GamesBtn"
+            android:layout_toStartOf="@+id/GamesBtn"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="100dp"
+            app:srcCompat="@mipmap/projectbuttons_150x150" />
+
+        <TextView
+            android:id="@+id/Entree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/FoodBtn"
+            android:layout_alignLeft="@+id/FoodBtn"
+            android:layout_alignStart="@+id/FoodBtn"
+            android:layout_marginBottom="13dp"
+            android:layout_marginLeft="34dp"
+            android:layout_marginStart="34dp"
+            android:text="Entree" />
+
+        <TextView
+            android:id="@+id/Drink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/Entree"
+            android:layout_alignBottom="@+id/Entree"
+            android:layout_alignLeft="@+id/Appetizers"
+            android:layout_alignStart="@+id/Appetizers"
+            android:layout_marginLeft="11dp"
+            android:layout_marginStart="11dp"
+            android:text="Drinks" />
+
+        <TextView
+            android:id="@+id/Dessert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/MusicBtn"
+            android:layout_alignEnd="@+id/Entree"
+            android:layout_alignRight="@+id/Entree"
+            android:layout_marginBottom="12dp"
+            android:text="Dessert" />
+
+        <TextView
+            android:id="@+id/Appetizers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/Dessert"
+            android:layout_alignBottom="@+id/Dessert"
+            android:layout_alignLeft="@+id/DSBtn"
+            android:layout_alignStart="@+id/DSBtn"
+            android:layout_marginLeft="11dp"
+            android:layout_marginStart="11dp"
+            android:text="Appetizers"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/VOBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/FoodBtn"
+            android:text="View Order" />
+
+        <Button
+            android:id="@+id/CWBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/DSBtn"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="Call Waiter" />
+
+        <Button
+            android:id="@+id/BackBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/Dessert"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="Back" /><![CDATA[
+
+
+
+
+
+
+
+    Button
+        android:id="@+id/CallBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/Entree"
-        android:layout_alignBottom="@+id/Entree"
-        android:layout_alignLeft="@+id/Appetizers"
-        android:layout_alignStart="@+id/Appetizers"
-        android:layout_marginLeft="11dp"
-        android:layout_marginStart="11dp"
-        android:text="Drinks" />
+        android:layout_marginBottom="40dp"
+        android:text="Call Waiter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/Dessert"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/MusicBtn"
-        android:layout_alignEnd="@+id/Entree"
-        android:layout_alignRight="@+id/Entree"
-        android:layout_marginBottom="12dp"
-        android:text="Dessert" />
 
-    <TextView
-        android:id="@+id/Appetizers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/Dessert"
-        android:layout_alignBottom="@+id/Dessert"
-        android:layout_alignLeft="@+id/DSBtn"
-        android:layout_alignStart="@+id/DSBtn"
-        android:layout_marginLeft="11dp"
-        android:layout_marginStart="11dp"
-        android:text="Appetizers"
-        android:textAlignment="center" />
 
-    <Button
-        android:id="@+id/VOBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/FoodBtn"
-        android:text="View Order" />
 
-    <Button
-        android:id="@+id/CWBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/DSBtn"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:text="Call Waiter" />
-
-    <Button
-        android:id="@+id/BackBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/Dessert"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:text="Back" />
+    ]]>
+    </RelativeLayout>
 
 </RelativeLayout>

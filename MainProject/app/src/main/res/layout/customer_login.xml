@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0693CE"
-    tools:context="project.manager.Customer.customer_login">
+    tools:context="project.manager.customer_login">
 
     <TextView
         android:id="@+id/textView"
@@ -15,7 +15,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Customer Name:"
+        android:text="Waitstaff ID:"
         android:textColor="#194564"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -27,7 +27,7 @@
         app:layout_constraintVertical_bias="0.110000014" />
 
     <EditText
-        android:id="@+id/customer_id"
+        android:id="@+id/waitstaff_id"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_marginBottom="8dp"
@@ -61,7 +61,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customer_id"
+        app:layout_constraintTop_toBottomOf="@+id/waitstaff_id"
         app:layout_constraintVertical_bias="0.120000005" />
 
     <EditText

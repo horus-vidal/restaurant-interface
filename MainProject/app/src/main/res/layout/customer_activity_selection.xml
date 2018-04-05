@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="project.manager.Customer.customer_Selection">
+    tools:context="com.example.chimchilla.krustykrab.customer_Selection">
 
     <ImageButton
         android:id="@+id/OrderBtn"
@@ -45,32 +45,40 @@
         android:id="@+id/ModifyBtn"
         android:layout_width="200dp"
         android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/PriceTextView"
-        android:layout_toStartOf="@+id/OrderImg"
+        android:layout_marginLeft="71dp"
+        android:layout_marginStart="71dp"
         app:srcCompat="@android:drawable/btn_star_big_on" />
 
     <Button
         android:id="@+id/BackBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/NameTextView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/ModifyBtn"
+        android:layout_marginLeft="44dp"
+        android:layout_marginStart="44dp"
         android:text="Back" />
 
     <Button
         android:id="@+id/VOBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/OrderImg"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_alignStart="@+id/OrderImg"
         android:text="View Order" />
 
     <Button
         android:id="@+id/CWBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@+id/NameTextView"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/OrderBtn"
         android:text="Call Waiter" />
 
     <TextView
