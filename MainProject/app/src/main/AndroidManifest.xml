@@ -75,6 +75,28 @@
             android:screenOrientation="landscape" />
 
 
+        <activity
+            android:name=".customer_MainActivity"
+            android:parentActivityName=".MainProjectScreen"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".customer_Food" />
+        <activity android:name=".customer_Entrees" />
+        <activity android:name=".customer_drink" />
+        <activity android:name=".customer_Dessert" />
+        <activity android:name=".customer_Apps" />
+        <activity android:name=".customer_Selection" />
+        <activity android:name=".customer_Mods" />
+        <activity android:name=".customer_Music" />
+        <activity
+            android:name=".customer_Games"
+            android:label="@string/title_activity_games"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".customer_cart" />
+        <activity android:name=".customer_DailySpecial" />
+        <activity android:name=".customer_DS_Monday" />
+        <activity android:name=".customer_DS_Tuesday" />
+
+
     </application>
 
 </manifest>

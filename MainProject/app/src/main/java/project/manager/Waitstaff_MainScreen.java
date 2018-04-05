@@ -13,7 +13,6 @@ public class Waitstaff_MainScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //creates and preps button to be clicked
         Button sign_in_button = (Button) findViewById(R.id.log_in_button);
         sign_in_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -22,8 +21,6 @@ public class Waitstaff_MainScreen extends AppCompatActivity {
             }
         });
     }
-
-    //sends user to waiter main menu if user clicks login
     public void staff_sign_in() {
         Intent signIn_intent = new Intent(this, Waitstaff_TablesActivity.class);
         startActivity(signIn_intent);
