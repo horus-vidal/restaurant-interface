@@ -918,6 +918,35 @@ public class DBhelper extends SQLiteOpenHelper {
         Cursor res = db.rawQuery("select * from " + ta_table, null);
         return res;
     }
-    
+
+    //returns waiter count
+    public int getWaiterCount()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+
+        Cursor c = db.rawQuery("select count(*) from " + ws_table, null);
+        c.moveToFirst();
+        int count = c.getInt(0);
+
+        return count;
+    }
+
+
+    //does waiter exist
+    public boolean doesWaiterExist(String name) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select count(*) from " + ws_table
+                            + " where " + ws_col1 + " = '" +  name + "' ", null);
+
+        res.moveToFirst();
+
+        if(res.getInt(0) > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }
 
