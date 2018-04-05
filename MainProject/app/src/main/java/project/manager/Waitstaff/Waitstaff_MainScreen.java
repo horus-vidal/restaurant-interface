@@ -13,12 +13,13 @@ import project.manager.DBhelper;
 import project.manager.R;
 
 public class Waitstaff_MainScreen extends AppCompatActivity {
+    DBhelper myDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        myDb = new DBhelper(this);
 
         setTitle("Waitstaff Log-in");
 
@@ -35,9 +36,9 @@ public class Waitstaff_MainScreen extends AppCompatActivity {
 
                 /*
                 //if waiters aren't fully staffed and user isn't already "clocked in", "clock in" waiter
-                if(db.getWaiterCount() < 4 && db.doesWaiterExist(waiterName.getText().toString()) == false)
+                if(myDb.getWaiterCount() < 4 && myDb.doesWaiterExist(waiterName.getText().toString()) == false)
                 {
-                    db.WSlogin(String name)
+                    myDb.WSlogin(waiterName.getText().toString(), waiterPassword.getText().toString());
                 }
                 */
 
