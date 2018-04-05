@@ -15,6 +15,8 @@ public class customer_login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.customer_login);
 
+        setTitle("Customer Log-in");
+
         Button sign_in_button = (Button) findViewById(R.id.customer_log_in_button);
         sign_in_button.setOnClickListener(new View.OnClickListener() {
             @Override
