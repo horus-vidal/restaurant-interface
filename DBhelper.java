@@ -192,7 +192,7 @@ public class DBhelper extends SQLiteOpenHelper {
         //create values for a new order item
         ContentValues contentvalues = new ContentValues();
 
-        Log.d("ABOVE PRICE CALL", "ITEM NAME IS: " + itemName );
+
         //get total order item cost
        double cost = getOrderItemPrice(itemName, quantity);
 
@@ -223,7 +223,7 @@ public class DBhelper extends SQLiteOpenHelper {
         //create a database object
         SQLiteDatabase db = this.getWritableDatabase();
 
-        Log.d("ABOVE PRICE QUERY", "ITEM NAME IS: " + name);
+
 
         //query the database
         //SQL reads as:
@@ -421,13 +421,13 @@ public class DBhelper extends SQLiteOpenHelper {
 
             SQL_join = SQL_join + extraQuery;
 
-            Log.d("BIG JOIN: ", SQL_join);
+
 
             Cursor res2 = db.rawQuery(SQL_join, null);
             return res2;
         }
 
-        Log.d("LITTLE JOIN: ", SQL_join);
+
         //if there is only one allergen, the function drops to this statement and prints
         //out the results for only one
         Cursor res = db.rawQuery(SQL_join, null);
@@ -489,13 +489,13 @@ public class DBhelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        Log.d("date: ", " before lmao " );
+
         //get current date and convert to string
         Cursor c1 = db.rawQuery("select date('now')", null);
         c1.moveToFirst();
         String nowDate = c1.getString(0);
 
-        Log.d("date: ", "now= " + nowDate);
+
 
         //SQL reads:
         //SELECT order_items.*, full_order.server_name
@@ -512,7 +512,7 @@ public class DBhelper extends SQLiteOpenHelper {
                 + orders_table + "." + fo_col3 + " = '"
                 + nowDate + "' ";
 
-        Log.d("DATE JOIN: ", SQL_join);
+
 
 
         Cursor c = db.rawQuery(SQL_join, null);
