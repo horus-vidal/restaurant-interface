@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import project.manager.R;
 
@@ -21,6 +23,9 @@ public class customer_login extends AppCompatActivity {
         sign_in_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                EditText customerName;
+                customerName = (EditText) findViewById(R.id.customer_id);
+                Toast.makeText(getApplicationContext(), (customerName.getText().toString() + " signed in."), Toast.LENGTH_SHORT).show();
                 staff_sign_in();
             }
         });
