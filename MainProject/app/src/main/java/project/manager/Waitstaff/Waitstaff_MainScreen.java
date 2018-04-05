@@ -1,6 +1,7 @@
 package project.manager.Waitstaff;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import project.manager.DBhelper;
 import project.manager.R;
 
 public class Waitstaff_MainScreen extends AppCompatActivity {
@@ -16,6 +18,7 @@ public class Waitstaff_MainScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         setTitle("Waitstaff Log-in");
 
@@ -26,13 +29,18 @@ public class Waitstaff_MainScreen extends AppCompatActivity {
                 //get username
                 EditText waiterName;
                 waiterName = (EditText) findViewById(R.id.customer_id);
+
+                EditText waiterPassword;
+                waiterPassword = (EditText) findViewById(R.id.waitstaff_password);
+
                 /*
-                    //if waiters aren't fully staffed and user isn't already "clocked in", "clock in" waiter
-                    if(db.getWaiterCount() < 4 && db.doesWaiterExist(waiterName.getText().toString()) == false)
-                    {
-                        db.addWaiter(String name)
-                    }
+                //if waiters aren't fully staffed and user isn't already "clocked in", "clock in" waiter
+                if(db.getWaiterCount() < 4 && db.doesWaiterExist(waiterName.getText().toString()) == false)
+                {
+                    db.WSlogin(String name)
+                }
                 */
+
                 Toast.makeText(getApplicationContext(), (waiterName.getText().toString() + " signed in."), Toast.LENGTH_SHORT).show();
 
                 //get password?
