@@ -75,15 +75,11 @@
         <activity
             android:name=".customer_MainActivity"
             android:parentActivityName=".MainProjectScreen"
-<<<<<<< HEAD
             android:screenOrientation="landscape" />
-=======
-            android:screenOrientation="landscape"/>
 
         <activity android:name=".customer_login"
             android:screenOrientation="landscape"/>
 
->>>>>>> bbcf3af22503fbce37a1f9a423620ffc7e517c5f
         <activity android:name=".customer_Food" />
         <activity android:name=".customer_Entrees" />
         <activity android:name=".customer_drink" />
