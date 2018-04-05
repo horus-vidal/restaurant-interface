@@ -59,6 +59,15 @@ public class customer_Selection extends AppCompatActivity {
                 startActivity(startIntent);
             }
         });
+        Button CWBtn = (Button) findViewById(R.id.CWBtn);
+        CWBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Your waiter has been notified!", Toast.LENGTH_LONG).show();
+
+
+            }
+        });
 
     }
 }

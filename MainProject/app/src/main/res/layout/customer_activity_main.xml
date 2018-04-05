@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background = "@drawable/krustykrabbg"
     tools:context="com.example.chimchilla.krustykrab.customer_MainActivity"><![CDATA[
 
     TextView
@@ -24,10 +25,12 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:layout_marginEnd="64dp"
-            android:layout_marginRight="64dp"
-            android:layout_marginTop="30dp"
-            app:srcCompat="@android:drawable/btn_star_big_on" />
+            android:layout_marginEnd="65dp"
+            android:layout_marginRight="65dp"
+            android:layout_marginTop="31dp"
+            android:adjustViewBounds="false"
+            android:backgroundTint="@android:color/transparent"
+            app:srcCompat="@mipmap/games1" />
 
     <ImageButton
         android:id="@+id/DSBtn"
@@ -37,7 +40,7 @@
         android:layout_alignStart="@+id/GamesBtn"
         android:layout_alignTop="@+id/MusicBtn"
         android:contentDescription="@button for daily special"
-        app:srcCompat="@android:drawable/btn_star_big_on" />
+        app:srcCompat="@mipmap/dailyspecialbtn" />
 
     <ImageButton
         android:id="@+id/MusicBtn"
@@ -48,19 +51,19 @@
         android:layout_below="@+id/Entree"
         android:layout_marginTop="27dp"
         android:contentDescription="@button for daily special"
-        app:srcCompat="@android:drawable/btn_star_big_on" />
+        app:srcCompat="@mipmap/musicbtnn" />
 
     <ImageButton
         android:id="@+id/FoodBtn"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignTop="@+id/GamesBtn"
-        android:layout_marginEnd="118dp"
-        android:layout_marginRight="118dp"
+        android:layout_marginEnd="116dp"
+        android:layout_marginRight="116dp"
         android:layout_toLeftOf="@+id/GamesBtn"
         android:layout_toStartOf="@+id/GamesBtn"
         android:contentDescription="100dp"
-        app:srcCompat="@android:drawable/btn_star_big_on" />
+        app:srcCompat="@mipmap/krabby_patty_icon" />
 
     <TextView
         android:id="@+id/Entree"
@@ -105,7 +108,8 @@
         android:layout_alignEnd="@+id/DSBtn"
         android:layout_alignRight="@+id/DSBtn"
         android:text="Daily Special"
-        android:textAlignment="textStart" />
+        android:textAlignment="textStart"
+        android:gravity="start" />
 
     <Button
         android:id="@+id/BackBtn"

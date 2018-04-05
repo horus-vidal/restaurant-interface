@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 public class customer_Food extends AppCompatActivity {
 
@@ -66,7 +67,15 @@ public class customer_Food extends AppCompatActivity {
                 startActivity(startIntent);
             }
         });
+        Button CWBtn = (Button) findViewById(R.id.CWBtn);
+        CWBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Your waiter has been notified!", Toast.LENGTH_LONG).show();
 
+
+            }
+        });
 
     }
 }

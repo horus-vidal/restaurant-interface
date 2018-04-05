@@ -99,14 +99,6 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".customer_cart" />
         <activity android:name=".customer_DailySpecial" />
-        <activity android:name=".customer_DS_Monday" />
-        <activity android:name=".customer_DS_Tuesday" />
-        <activity android:name=".customer_DS_Wednesday" />
-        <activity
-            android:name=".customer_DS_Thursday"
-            android:label="@string/title_activity_customer__ds__thursday"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".customer_DS_Friday"></activity>
     </application>
 
 </manifest>
