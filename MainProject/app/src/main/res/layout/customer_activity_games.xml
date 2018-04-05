@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="project.manager.customer_Games">
+    tools:context="project.manager.Customer.customer_Games">
 
 
     <android.support.design.widget.AppBarLayout

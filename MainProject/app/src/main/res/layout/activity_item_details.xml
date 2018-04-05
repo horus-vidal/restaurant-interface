@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0693CE"
-    tools:context="project.manager.Waitstaff_item_details">
+    tools:context="project.manager.Waitstaff.Waitstaff_item_details">
 
     <Button
         android:id="@+id/item_back_button"

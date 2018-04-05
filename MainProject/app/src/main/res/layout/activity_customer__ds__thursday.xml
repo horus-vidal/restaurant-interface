@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="project.manager.customer_DS_Thursday">
+    tools:context="project.manager.Customer.customer_DS_Thursday">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

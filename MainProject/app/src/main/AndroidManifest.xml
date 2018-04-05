@@ -21,59 +21,59 @@
 
         <!-- MANAGER ACTIVITIES -->
         <activity
-            android:name=".Manager_TableList"
-            android:parentActivityName=".Manager_MainScreen"
+            android:name=".Manager.Manager_TableList"
+            android:parentActivityName=".Manager.Manager_MainScreen"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Manager_TableInformation"
-            android:parentActivityName=".Manager_TableList"
+            android:name=".Manager.Manager_TableInformation"
+            android:parentActivityName=".Manager.Manager_TableList"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Manager_Trans"
-            android:parentActivityName=".Manager_MainScreen"
+            android:name=".Manager.Manager_Trans"
+            android:parentActivityName=".Manager.Manager_MainScreen"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Manager_CompReports"
-            android:parentActivityName=".Manager_MainScreen"
+            android:name=".Manager.Manager_CompReports"
+            android:parentActivityName=".Manager.Manager_MainScreen"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Manager_EmplReports"
-            android:parentActivityName=".Manager_MainScreen"
+            android:name=".Manager.Manager_EmplReports"
+            android:parentActivityName=".Manager.Manager_MainScreen"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Manager_TransInformation"
-            android:parentActivityName=".Manager_Trans"
+            android:name=".Manager.Manager_TransInformation"
+            android:parentActivityName=".Manager.Manager_Trans"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Manager_EmplReportInformation"
-            android:parentActivityName=".Manager_EmplReports"
+            android:name=".Manager.Manager_EmplReportInformation"
+            android:parentActivityName=".Manager.Manager_EmplReports"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Manager_MainScreen"
+            android:name=".Manager.Manager_MainScreen"
             android:parentActivityName=".MainProjectScreen"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Waitstaff_MainScreen"
+            android:name=".Waitstaff.Waitstaff_MainScreen"
             android:parentActivityName=".MainProjectScreen"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".Waitstaff_TablesActivity"
-            android:parentActivityName=".Waitstaff_MainScreen"
+            android:name=".Waitstaff.Waitstaff_TablesActivity"
+            android:parentActivityName=".Waitstaff.Waitstaff_MainScreen"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".Waitstaff_Table_Details"
-            android:parentActivityName=".Waitstaff_TablesActivity"
+            android:name=".Waitstaff.Waitstaff_Table_Details"
+            android:parentActivityName=".Waitstaff.Waitstaff_TablesActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".Waitstaff_Order_details"
-            android:parentActivityName=".Waitstaff_Table_Details"
+            android:name=".Waitstaff.Waitstaff_Order_details"
+            android:parentActivityName=".Waitstaff.Waitstaff_Table_Details"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".Waitstaff_item_details"
-            android:parentActivityName=".Waitstaff_MainScreen"
+            android:name=".Waitstaff.Waitstaff_item_details"
+            android:parentActivityName=".Waitstaff.Waitstaff_MainScreen"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".customer_MainActivity"
+            android:name=".Customer.customer_MainActivity"
             android:screenOrientation="landscape"/>
 <!--<<<<<<< HEAD-->
             android:parentActivityName=".MainProjectScreen" />
@@ -83,46 +83,46 @@
             <!--android:screenOrientation="landscape" />-->
 
 <!--&gt;>>>>>> f19c78e487359097d8a1a7bd6d4e8b52c71a324e -->
-        <activity android:name=".customer_login"
+        <activity android:name=".Customer.customer_login"
             android:screenOrientation="landscape"/>
 
-        <activity android:name=".customer_Food"
+        <activity android:name=".Customer.customer_Food"
             android:screenOrientation="landscape"/>
-        <activity android:name=".customer_Entrees"
+        <activity android:name=".Customer.customer_Entrees"
             android:screenOrientation="landscape"/>
-        <activity android:name=".customer_drink"
+        <activity android:name=".Customer.customer_drink"
             android:screenOrientation="landscape"/>
-        <activity android:name=".customer_Dessert"
+        <activity android:name=".Customer.customer_Dessert"
             android:screenOrientation="landscape"/>
-        <activity android:name=".customer_Apps"
+        <activity android:name=".Customer.customer_Apps"
             android:screenOrientation="landscape"/>
-        <activity android:name=".customer_Selection"
+        <activity android:name=".Customer.customer_Selection"
             android:screenOrientation="landscape"/>
-        <activity android:name=".customer_Mods"
+        <activity android:name=".Customer.customer_Mods"
             android:screenOrientation="landscape"/>
-        <activity android:name=".customer_Music"
+        <activity android:name=".Customer.customer_Music"
             android:screenOrientation="landscape"/>
         <activity
-            android:name=".customer_Games"
+            android:name=".Customer.customer_Games"
             android:label="@string/title_activity_games"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="landscape"/>
-        <activity android:name=".customer_cart"
+        <activity android:name=".Customer.customer_cart"
             android:screenOrientation="landscape"/>
-        <activity android:name=".customer_DailySpecial"
+        <activity android:name=".Customer.customer_DailySpecial"
             android:screenOrientation="landscape"/>
-        <activity android:name=".customer_DS_Monday"
+        <activity android:name=".Customer.customer_DS_Monday"
             android:screenOrientation="landscape"/>
-        <activity android:name=".customer_DS_Tuesday"
+        <activity android:name=".Customer.customer_DS_Tuesday"
             android:screenOrientation="landscape"/>
-        <activity android:name=".customer_DS_Wednesday"
+        <activity android:name=".Customer.customer_DS_Wednesday"
             android:screenOrientation="landscape"/>
         <activity
-            android:name=".customer_DS_Thursday"
+            android:name=".Customer.customer_DS_Thursday"
             android:label="@string/title_activity_customer__ds__thursday"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="landscape"/>
-        <activity android:name=".customer_DS_Friday"
+        <activity android:name=".Customer.customer_DS_Friday"
             android:screenOrientation="landscape"/>
     </application>
 

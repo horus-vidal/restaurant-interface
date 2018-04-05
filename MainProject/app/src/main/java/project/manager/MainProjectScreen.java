@@ -5,6 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import project.manager.Customer.customer_login;
+import project.manager.Manager.Manager_MainScreen;
+import project.manager.Waitstaff.Waitstaff_MainScreen;
+
 public class MainProjectScreen extends AppCompatActivity {
 
     @Override
