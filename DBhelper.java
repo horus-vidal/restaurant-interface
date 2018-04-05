@@ -345,12 +345,11 @@ public class DBhelper extends SQLiteOpenHelper {
     }
 
     //deletes full row from order items table (by id)
-    //returns number of rows deleted (returns 0 if nothing was deleted)
-    public Integer deleteOrderItem(String id)
+    //returns true if appropriately deleted
+    public boolean deleteOrderItem(int id)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(oi_table, "id = ?",
-                new String[]{id});
+        return db.delete(oi_table, oi_col0 + " = " + id, null) > 0;
     }
 
     //finds the menu item for special of the day using the special tag (day)
@@ -579,6 +578,28 @@ public class DBhelper extends SQLiteOpenHelper {
         return res;
 
     }
+
+    //method to add a special item to the menu using the specialtag/day
+    //returns true if added appropriately
+    public boolean addSpecialItem(String itemName, String itemType, double price, String specialTag)
+    {
+        //create a database object
+        SQLiteDatabase db = this.getWritableDatabase();
+        //create values for a new order item
+        ContentValues contentvalues = new ContentValues();
+
+        //add values to db
+        contentvalues.put(mi_col2, itemName);
+        contentvalues.put(mi_col3, itemType);
+        contentvalues.put(mi_col4, price);
+        contentvalues.put(mi_col5, specialTag);
+
+        long result = db.insert(mi_table, null, contentvalues);
+        if(result == -1)
+            return false;
+        else return true;
+    }
+
 
 }
 
