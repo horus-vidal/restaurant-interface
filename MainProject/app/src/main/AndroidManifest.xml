@@ -79,6 +79,10 @@
             android:name=".customer_MainActivity"
             android:parentActivityName=".MainProjectScreen"
             android:screenOrientation="landscape"/>
+
+        <activity android:name=".customer_login"
+            android:screenOrientation="landscape"/>
+
         <activity android:name=".customer_Food" />
         <activity android:name=".customer_Entrees" />
         <activity android:name=".customer_drink" />
