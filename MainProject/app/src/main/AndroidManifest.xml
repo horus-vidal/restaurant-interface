@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="project.manager">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainProjectScreen"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- MANAGER ACTIVITIES -->
+        <activity
+            android:name=".Manager_TableList"
+            android:parentActivityName=".Manager_MainScreen"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Manager_TableInformation"
+            android:parentActivityName=".Manager_TableList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Manager_Trans"
+            android:parentActivityName=".Manager_MainScreen"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Manager_CompReports"
+            android:parentActivityName=".Manager_MainScreen"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Manager_EmplReports"
+            android:parentActivityName=".Manager_MainScreen"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Manager_TransInformation"
+            android:parentActivityName=".Manager_Trans"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Manager_EmplReportInformation"
+            android:parentActivityName=".Manager_EmplReports"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Manager_MainScreen"
+            android:parentActivityName=".MainProjectScreen"
+            android:screenOrientation="portrait"></activity>
+
+
+        <activity
+            android:name=".Waitstaff_MainScreen"
+            android:parentActivityName=".MainProjectScreen"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Waitstaff_TablesActivity"
+            android:parentActivityName=".Waitstaff_MainScreen"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Waitstaff_Table_Details"
+            android:parentActivityName=".Waitstaff_TablesActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Waitstaff_Order_details"
+            android:parentActivityName=".Waitstaff_Table_Details"
+            android:screenOrientation="landscape" />
+        <activity android:name=".Waitstaff_item_details"
+            android:parentActivityName=".Waitstaff_MainScreen"
+            android:screenOrientation="landscape" />
+
+
+    </application>
+
+</manifest>

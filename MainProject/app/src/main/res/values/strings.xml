@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Restaurant</string>
+    <string name="button_table">View Tables</string>
+    <string name="button_trans">View Transactions</string>
+    <string name="button_comps">Compensation Reports</string>
+    <string name="button_empl">Employee Reports</string>
+
+    <string name="button_customer">Customer Interface</string>
+    <string name="button_waitstaff">Waitstaff Interface</string>
+    <string name="button_kitchen">Kitchen Interface</string>
+    <string name="button_manager">Manager Interface</string>
+</resources>
