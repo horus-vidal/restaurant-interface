@@ -23,9 +23,12 @@ public class customer_login extends AppCompatActivity {
         sign_in_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //get username
                 EditText customerName;
                 customerName = (EditText) findViewById(R.id.customer_id);
                 Toast.makeText(getApplicationContext(), (customerName.getText().toString() + " signed in."), Toast.LENGTH_SHORT).show();
+
+                //get password
                 staff_sign_in();
             }
         });

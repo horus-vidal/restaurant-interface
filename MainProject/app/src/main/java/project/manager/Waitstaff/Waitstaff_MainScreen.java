@@ -23,10 +23,19 @@ public class Waitstaff_MainScreen extends AppCompatActivity {
         sign_in_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //creates item for the waiter's username
+                //get username
                 EditText waiterName;
                 waiterName = (EditText) findViewById(R.id.customer_id);
+                /*
+                    //if waiters aren't fully staffed and user isn't already "clocked in", "clock in" waiter
+                    if(db.getWaiterCount() < 4 && db.doesWaiterExist(waiterName.getText().toString()) == false)
+                    {
+                        db.addWaiter(String name)
+                    }
+                */
                 Toast.makeText(getApplicationContext(), (waiterName.getText().toString() + " signed in."), Toast.LENGTH_SHORT).show();
+
+                //get password?
 
                 staff_sign_in();
             }
