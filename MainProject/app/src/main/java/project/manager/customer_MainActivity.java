@@ -110,7 +110,7 @@ public class customer_MainActivity extends AppCompatActivity {
         GamesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startIntent = new Intent(getApplicationContext(), customer_Games.class);
+                Intent startIntent = new Intent(getApplicationContext(), games.class);
                 startActivity(startIntent);
             }
         });
